@@ -12,6 +12,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hhz.tms.entity.IdEntity;
 
 /**
@@ -42,7 +43,7 @@ public class Resource extends IdEntity {
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
-
+	@JsonIgnore
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "t_sys_resource_perm_rela", joinColumns = { @JoinColumn(name = "resource_id") }, inverseJoinColumns = { @JoinColumn(name = "permission_id") })
 	public List<Permission> getPermissions() {

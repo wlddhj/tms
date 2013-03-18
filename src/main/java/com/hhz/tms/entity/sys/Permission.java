@@ -12,6 +12,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hhz.tms.entity.IdEntity;
 
 /**
@@ -51,7 +52,7 @@ public class Permission extends IdEntity {
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
-
+	@JsonIgnore
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "t_sys_resource_perm_rela", joinColumns = { @JoinColumn(name = "permission_id") }, inverseJoinColumns = { @JoinColumn(name = "resource_id") })
 	public List<Resource> getResources() {
@@ -61,7 +62,7 @@ public class Permission extends IdEntity {
 	public void setResources(List<Resource> resources) {
 		this.resources = resources;
 	}
-
+	@JsonIgnore
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "t_sys_role_perm_rela", joinColumns = { @JoinColumn(name = "permission_id") }, inverseJoinColumns = { @JoinColumn(name = "role_id") })
 	public List<Role> getRoles() {
@@ -71,7 +72,7 @@ public class Permission extends IdEntity {
 	public void setRoles(List<Role> roles) {
 		this.roles = roles;
 	}
-
+	@JsonIgnore
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "t_sys_menu_perm_rela", joinColumns = { @JoinColumn(name = "permission_id") }, inverseJoinColumns = { @JoinColumn(name = "menu_id") })
 	public List<Menu> getMenus() {

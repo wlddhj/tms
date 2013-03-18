@@ -13,8 +13,10 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.hhz.tms.dao.BaseDao;
 import com.hhz.tms.dao.sys.PermissionDao;
 import com.hhz.tms.entity.sys.Permission;
+import com.hhz.tms.service.BaseService;
 import com.hhz.tms.util.WebUtil;
 
 /**
@@ -24,46 +26,20 @@ import com.hhz.tms.util.WebUtil;
 @Component
 // 默认将类中的所有public函数纳入事务管理.
 @Transactional(readOnly = true)
-public class PermissionService {
+public class PermissionService extends BaseService<Permission>{
 	@Autowired
 	private PermissionDao permissionDao;
 
-	public List<Permission> findAll() {
-		List<Permission> permissions = (List<Permission>) permissionDao.findAll();
-		return permissions;
+	@Override
+	public BaseDao<Permission> getBaseDao() {
+		// TODO Auto-generated method stub
+		return permissionDao;
 	}
 
-	public Permission getEntity(Long id) {
-		return permissionDao.findOne(id);
-	}
-
-	@Transactional(readOnly = false)
-	public void save(Permission permission) {
-		permissionDao.save(permission);
-	}
-
-	@Transactional(readOnly = false)
-	public void delete(Long id) {
-		permissionDao.delete(id);
-	}
-
-	@Transactional(readOnly = false)
-	public void saveBatch(List<Permission> insertedRecords, List<Permission> updatedRecords,
-			List<Permission> deletedRecords) {
-		for (Permission permission : insertedRecords) {
-			save(permission);
-		}
-		for (Permission permission : updatedRecords) {
-			save(permission);
-		}
-		for (Permission permission : deletedRecords) {
-			delete(permission.getId());
-		}
-	}
-
-	public Page<Permission> findPage(Map<String, Object> searchParams, PageRequest pageRequest) {
-		Specification<Permission> spec = WebUtil.buildSpecification(searchParams, Permission.class);
-		return permissionDao.findAll(spec, pageRequest);
+	@Override
+	public Class<Permission> getEntityClazz() {
+		// TODO Auto-generated method stub
+		return Permission.class;
 	}
 
 }

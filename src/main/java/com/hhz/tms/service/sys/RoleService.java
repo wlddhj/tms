@@ -13,8 +13,11 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.hhz.tms.dao.BaseDao;
 import com.hhz.tms.dao.sys.RoleDao;
+import com.hhz.tms.entity.sys.Resource;
 import com.hhz.tms.entity.sys.Role;
+import com.hhz.tms.service.BaseService;
 import com.hhz.tms.util.WebUtil;
 
 /**
@@ -24,46 +27,19 @@ import com.hhz.tms.util.WebUtil;
 @Component
 //默认将类中的所有public函数纳入事务管理.
 @Transactional(readOnly = true)
-public class RoleService {
+public class RoleService  extends BaseService<Role>{
 	@Autowired
 	private RoleDao roleDao;
 
-	public List<Role> findAll() {
-		List<Role> roles = (List<Role>) roleDao.findAll();
-		return roles;
+	@Override
+	public BaseDao<Role> getBaseDao() {
+		// TODO Auto-generated method stub
+		return roleDao;
 	}
 
-	public Role getEntity(Long id) {
-		return roleDao.findOne(id);
-	}
-
-	@Transactional(readOnly = false)
-	public void save(Role role) {
-		roleDao.save(role);
-	}
-
-	@Transactional(readOnly = false)
-	public void delete(Long id) {
-		roleDao.delete(id);
-	}
-	
-
-	@Transactional(readOnly = false)
-	public void saveBatch(List<Role> insertedRecords, List<Role> updatedRecords,
-			List<Role> deletedRecords) {
-		for (Role role : insertedRecords) {
-			save(role);
-		}
-		for (Role role : updatedRecords) {
-			save(role);
-		}
-		for (Role role : deletedRecords) {
-			delete(role.getId());
-		}
-	}
-
-	public Page<Role> findPage(Map<String, Object> searchParams, PageRequest pageRequest) {
-		Specification<Role> spec = WebUtil.buildSpecification(searchParams, Role.class);
-		return roleDao.findAll(spec, pageRequest);
+	@Override
+	public Class<Role> getEntityClazz() {
+		// TODO Auto-generated method stub
+		return Role.class;
 	}
 }
