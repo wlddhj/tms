@@ -9,6 +9,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import com.hhz.tms.entity.sys.Menu;
 
 /**
+ * 菜单dao
  * @author huangjian
  * 
  */
