@@ -21,7 +21,7 @@ public class EasyTreeNode {
 	private String text;
 	private String iconCls;// 图标class，如icon-save
 	private String state;// open,closed,默认open
-	private boolean checked = false;
+	private Boolean checked = false;
 	private Map<String, Object> attributes = new HashMap<String, Object>();// 其他属性
 	private List<EasyTreeNode> children = new ArrayList<EasyTreeNode>();
 
@@ -61,11 +61,11 @@ public class EasyTreeNode {
 		this.state = state;
 	}
 
-	public boolean isChecked() {
+	public Boolean isChecked() {
 		return checked;
 	}
 
-	public void setChecked(boolean checked) {
+	public void setChecked(Boolean checked) {
 		this.checked = checked;
 	}
 

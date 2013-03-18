@@ -2,14 +2,6 @@
 <%@ include file="/WEB-INF/layouts/taglib.jsp" %>
 <!DOCTYPE html>
 <html>
-<head>
-	<script>
-		$(document).ready(function() {
-			//为inputForm注册validate函数
-			$("#inputForm").validate();
-		});
-	</script>
-</head>
 
 <body>
 	<form id="inputForm" action="${ctx}/admin/menu/save" method="post" class="form-horizontal">

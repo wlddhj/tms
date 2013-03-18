@@ -120,25 +120,22 @@ public class CollectionUtil {
 		return rtnVal;
 	}
 
-	public static <T> T getEntityFromList(final List<T> lstOffice, String strProp, String strValue) {
+	public static <T> T getEntityFromList(final List<T> list, String tarProp, Object tarValue) {
 		Object rtn = null;
-		for (Object obj : lstOffice) {
+		for (Object obj : list) {
 			try {
-				String strValueTar = (String) PropertyUtils.getSimpleProperty(obj, strProp);
-				if (strValueTar != null && strValue != null) {
-					if (StringUtils.equals(strValueTar.trim(), strValue.trim())) {
+				Object objVal = PropertyUtils.getSimpleProperty(obj, tarProp);
+				if (objVal != null && tarValue != null) {
+					if (objVal.equals(tarValue)) {
 						rtn = obj;
 						break;
 					}
 				}
 			} catch (IllegalAccessException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (InvocationTargetException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (NoSuchMethodException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -310,5 +307,10 @@ public class CollectionUtil {
 		}
 		return flag;
 
+	}
+
+	public static boolean contain(final List<?> list, String tarProp, Object tarValue) {
+		Object rtn = getEntityFromList(list, tarProp, tarValue);
+		return rtn != null;
 	}
 }

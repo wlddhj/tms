@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.hhz.tms.entity.sys.Menu;
+import com.hhz.tms.entity.sys.Permission;
+import com.hhz.tms.entity.sys.Resource;
 
 /**
  * @author jianhuang
@@ -48,6 +50,20 @@ public class EasyTreeUtil {
 		}
 		for (EasyTreeNode node : root.getChildren()) {
 			node.setState(EasyTreeNode.STATE_OPEN);
+		}
+		return root;
+	}
+
+	public static EasyTreeNode getResourcePermTree(List<Permission> permissions, Resource resource) {
+		EasyTreeNode root = getRoot("All Permissions");
+		List<Permission> lstSelect = resource.getPermissions();
+		for (Permission permission : permissions) {
+			EasyTreeNode resultVo = new EasyTreeNode();
+			resultVo.setText(permission.getPermName() + "(" + permission.getPermCd() + ")");
+			resultVo.setId(String.valueOf(permission.getId()));
+			boolean isContain = CollectionUtil.contain(lstSelect, "id", permission.getId());
+			resultVo.setChecked(isContain);
+			root.getChildren().add(resultVo);
 		}
 		return root;
 	}

@@ -62,6 +62,14 @@
 						</li>
 						<li>
 							<div>
+							<a href="javascript:addTab('资源分配','${ctx}/admin/resource/assign')">
+								<span class="icon icon-dict">&nbsp;</span>
+								<span class="nav">资源分配</span>
+							</a>
+							</div>
+						</li>
+						<li>
+							<div>
 							<a href="javascript:addTab('菜单管理','${ctx}/admin/menu')">
 								<span class="icon icon-dict">&nbsp;</span>
 								<span class="nav">菜单管理</span>

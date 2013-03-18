@@ -61,14 +61,16 @@
 				iconCls:'icon-add',
 				handler:function(){
 					$('#tt').datagrid('endEdit', lastIndex);
-					$('#tt').datagrid('appendRow',{
-						url:'',
-						remark:'',
-						enableFlg:'true'//默认值
-					});
+					var field={
+							url:'',
+							remark:'',
+							enableFlg:'true'//默认值
+						};
+					$('#tt').datagrid('appendRow',field);
 					lastIndex = $('#tt').datagrid('getRows').length-1;
 					$('#tt').datagrid('selectRow', lastIndex);
 					$('#tt').datagrid('beginEdit', lastIndex);
+					focusEditor(field,lastIndex);
 				}
 			},'-',{
 				text:'保存',
@@ -83,37 +85,60 @@
 					var row = $('#tt').datagrid('getSelected');
 					if(row){
 						var index = $('#tt').datagrid('getRowIndex', row);
+						var nextSelect=index;
 						if (row.id==undefined){
 							$('#tt').datagrid('deleteRow',index);
+							nextSelect=index>0?index-1:0;
+							$('#tt').datagrid('selectRow', nextSelect);
 						}else{
-						$.messager.confirm('提示','确认要删除该记录吗?',function(t){
-							if(t){
-								//TODO:如果该记录被引用,是否强制不允许删除?
-								$.post("${ctx}/admin/resource/delete/"+row.id,function(result) {
-									var rObj = eval(result);
-									if(rObj.success){
-										$('#tt').datagrid('reload');
-									}else{
-										alert(rObj.failure);
-									}
-								});
-							}
-						});
+							$.messager.confirm('提示','确认要删除该记录吗?',function(t){
+								if(t){
+									nextSelect=index>0?index-1:0;
+									//TODO:如果该记录被引用,是否强制不允许删除?
+									$.post("${ctx}/admin/resource/delete/"+row.id,function(result) {
+										var rObj = eval(result);
+										if(rObj.success){
+											$('#tt').datagrid('reload');
+											$('#tt').datagrid('selectRow', nextSelect);
+										}else{
+											alert(rObj.failure);
+										}
+									});
+								}
+							});
 						}
-						var nextSelect=index>0?index-1:0;
-						$('#tt').datagrid('selectRow', nextSelect);
 					}
 				}
 			},'-'],
-			onClickRow:function(rowIndex,rowData){
-				if (lastIndex != rowIndex){
+			onDblClickCell:function(index,field){
+				if (lastIndex != index){
 					$('#tt').datagrid('endEdit', lastIndex);
 					$('#tt').datagrid('beginEdit', rowIndex);
 				}
 				lastIndex = rowIndex;
-			}
+				focusEditor(field,lastIndex);
+			},
+			onClickCell:function(index,field){
+				if (lastIndex != index){
+					$('#tt').datagrid('endEdit', lastIndex);
+					$('#tt').datagrid('beginEdit', index);
+				}
+				lastIndex = index;
+				focusEditor(field,lastIndex);
+			},
 		});
 	});
+	function focusEditor(field,editIndex){
+		var editor = $('#tt').datagrid('getEditor', {index:editIndex,field:field});
+		if (editor){
+			editor.target.focus();
+		} else {
+			var editors = $('#tt').datagrid('getEditors', editIndex);
+			if (editors.length){
+				editors[0].target.focus();
+			}
+		}
+	}
 	function saveEdit(){
 		var flag=true;
 		var row = $('#tt').datagrid('getSelected');

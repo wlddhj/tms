@@ -12,5 +12,6 @@
 <script src="${ctx}/static/jquery-validation/1.10.0/jquery.validate.min.js" type="text/javascript"></script>
 <script src="${ctx}/static/jquery-validation/1.10.0/messages_bs_zh.js" type="text/javascript"></script>
 <script src="${ctx}/static/jquery-easyui/jquery.easyui.min.js" type="text/javascript"></script>
+<script src="${ctx}/static/jquery-easyui/jquery.edatagrid.js" type="text/javascript"></script>
 <script src="${ctx}/static/js/ConvertUtil.js" type="text/javascript"></script>
 <script src="${ctx}/static/bootstrap/2.2.2/js/bootstrap.min.js" type="text/javascript"></script>
