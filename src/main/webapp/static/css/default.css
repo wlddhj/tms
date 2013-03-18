@@ -32,4 +32,4 @@ a:hover{ color:Red; text-decoration:underline;}
 .tip {text-align: left;margin: 10px 0;padding: 10px 0 8px 40px;width: 95%;color: red;background:#fbd5b5 url('../images/res_tip.gif') no-repeat 5px 5px;}
 .tip div ol {margin: 0;padding: 0;}
 
-.validateTip{color:red;display:none;}
+div.search_div{height:70px;padding-top:5px;overflow:hidden;}

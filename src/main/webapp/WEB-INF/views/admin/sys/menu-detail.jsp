@@ -30,7 +30,7 @@
 				</div>
 			</div>	
 			<div class="control-group">
-				<label for="description" class="control-label">备注:</label>
+				<label for="remark" class="control-label">备注:</label>
 				<div class="controls">
 					<textarea id="remark" name="remark" class="input-large">${menu.remark}</textarea>
 				</div>

@@ -3,29 +3,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>资源管理</title>
+	<title>权限管理</title>
 <%@ include file="/WEB-INF/layouts/admin/header.jsp"%>
 </head>
 <body class="easyui-layout">
 <div region="north" title="查询" icon="icon-search" class="search_div" border="false">
 	<form id="searchForm" class="form-search" method="post">
-		<table>
-			<tr>
-				<td style="width:60px;">url:</td>
-				<td><input name="search_LIKES_url" type="text" value=""></input></td>
-				<td style="width:60px;">是否有效:</td>
-				<td><form:select path="search_EQB_enableFlg" items="${mapEnableFlg}" name="search_EQB_enableFlg"></form:select></td>
-				
-				<td>
-				<a href="#" id="btn" iconCls="icon-search" class="easyui-linkbutton" onclick="Convert.search('searchForm','tt');">查询</a></td>
-			</tr>
-		</table>
+	<table>
+		<tr>
+			<td style="width:60px;">权限代码:</td>
+			<td><input name="search_LIKES_permCd" type="text" value=""></input></td>
+			<td style="width:60px;">权限名称:</td>
+			<td><input type="text" name="search_LIKES_permName"></td>
+			<td>
+			<a href="#" id="btn" iconCls="icon-search" class="easyui-linkbutton" onclick="Convert.search('searchForm','tt');">查询</a>
+			</td>
+		</tr>
+	</table>
 	</form> 
 </div>
 <div region="center" border="false">
 	<table id="tt" fit="true"
 			title="" iconCls="icon-edit" singleSelect="true"
-			idField="id" url="${ctx}/admin/resource/list">
+			idField="id" url="${ctx}/admin/permission/list">
 	</table>
 </div>
 <script type="text/javascript">
@@ -37,7 +37,12 @@
 			rownumbers:true,
 			pageList:[50,40,30,20,10],
 			columns:[[
-				{field:'url',title:'url',editor:{type:'validatebox',options:{required:'true',validType:'length[1,50]'}}, sortable:true, width:280,
+				{field:'permCd',title:'权限代码',editor:{type:'validatebox',options:{required:'true',validType:'length[1,50]'}}, sortable:true, width:200,
+					formatter:function(value,row,index){
+						return '<div style="overflow: hidden; white-space: nowrap; text-overflow:ellipsis;" title="'+value+'">'+value+'</div>';
+					}
+				},
+				{field:'permName',title:'权限名称',editor:{type:'validatebox',options:{required:'true',validType:'length[1,50]'}}, sortable:true, width:200,
 					formatter:function(value,row,index){
 						return '<div style="overflow: hidden; white-space: nowrap; text-overflow:ellipsis;" title="'+value+'">'+value+'</div>';
 					}
@@ -45,14 +50,6 @@
 				{field:'remark',title:'备注',editor:{type:'text'}, sortable:true, width:300,
 					formatter:function(value,row,index){
 						return '<div style="overflow: hidden; white-space: nowrap; text-overflow:ellipsis;" title="'+value+'">'+value+'</div>';
-					}
-				},
-				{field:'enableFlg',title:'是否有效',editor:{type:'checkbox',options:{on:'true',off:'false'}}, sortable:true, width:80, align:'center',
-					formatter:function(value,row,index){
-						if(value=='true')
-							return '是';
-						else 
-							return '否';
 					}
 				}
 			]],
@@ -62,9 +59,9 @@
 				handler:function(){
 					$('#tt').datagrid('endEdit', lastIndex);
 					$('#tt').datagrid('appendRow',{
-						url:'',
-						remark:'',
-						enableFlg:'true'//默认值
+						permCd:'',
+						permName:'',
+						remark:''
 					});
 					lastIndex = $('#tt').datagrid('getRows').length-1;
 					$('#tt').datagrid('selectRow', lastIndex);
@@ -89,7 +86,7 @@
 						$.messager.confirm('提示','确认要删除该记录吗?',function(t){
 							if(t){
 								//TODO:如果该记录被引用,是否强制不允许删除?
-								$.post("${ctx}/admin/resource/delete/"+row.id,function(result) {
+								$.post("${ctx}/admin/permission/delete/"+row.id,function(result) {
 									var rObj = eval(result);
 									if(rObj.success){
 										$('#tt').datagrid('reload');
@@ -134,7 +131,7 @@
     		}
 		}
 		if (flag){
-		$.post("${ctx}/admin/resource/saveBatch",Convert.ToSaveParam("tt") , function(result) {
+		$.post("${ctx}/admin/permission/saveBatch",Convert.ToSaveParam("tt") , function(result) {
 			var rObj = eval(result);
 			if(rObj.success){
 				$('#tt').datagrid('reload');
@@ -143,10 +140,6 @@
 			}
 		});
 		}
-	}
-	//清空查询条件
-	function cleanSearchCon(){
-		$('#search_LIKE_url').val('');
 	}
 </script>
 </body>

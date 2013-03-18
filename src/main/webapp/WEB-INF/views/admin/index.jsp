@@ -70,7 +70,7 @@
 						</li>
 						<li>
 							<div>
-							<a href="javascript:addTab('权限管理','${ctx}/admin/resource')">
+							<a href="javascript:addTab('权限管理','${ctx}/admin/permission')">
 								<span class="icon icon-dict">&nbsp;</span>
 								<span class="nav">权限管理</span>
 							</a>
@@ -78,7 +78,7 @@
 						</li>
 						<li>
 							<div>
-							<a href="javascript:addTab('角色管理','${ctx}/admin/resource')">
+							<a href="javascript:addTab('角色管理','${ctx}/admin/role')">
 								<span class="icon icon-dict">&nbsp;</span>
 								<span class="nav">角色管理</span>
 							</a>

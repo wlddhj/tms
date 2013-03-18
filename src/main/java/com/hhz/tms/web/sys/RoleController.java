@@ -20,9 +20,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springside.modules.web.Servlets;
 
-import com.hhz.tms.entity.sys.Resource;
-import com.hhz.tms.service.sys.ResourceService;
-import com.hhz.tms.util.Constants;
+import com.hhz.tms.entity.sys.Role;
+import com.hhz.tms.service.sys.RoleService;
 import com.hhz.tms.util.JsonUtil;
 import com.hhz.tms.util.WebUtil;
 
@@ -31,16 +30,14 @@ import com.hhz.tms.util.WebUtil;
  * 
  */
 @Controller
-@RequestMapping(value = "/admin/resource")
-public class ResourceController {
+@RequestMapping(value = "/admin/role")
+public class RoleController {
 	@Autowired
-	private ResourceService resourceService;
+	private RoleService roleService;
 
 	@RequestMapping(value = "")
 	public String index(Model model) {
-		model.addAttribute("mapEnableFlg", Constants.getMapEnableFlg());
-		model.addAttribute("search_EQB_enableFlg", true);
-		return "admin/sys/resource";
+		return "admin/sys/role";
 	}
 
 	@RequestMapping(value = "list")
@@ -58,7 +55,7 @@ public class ResourceController {
 			order = WebUtil.DESC;
 		}
 		PageRequest pageRequest = WebUtil.buildPageRequest(pageNumber, pageSize, sortField, order);
-		Page<Resource> page = resourceService.findResourcePage(searchParams, pageRequest);
+		Page<Role> page = roleService.findPage(searchParams, pageRequest);
 
 		JsonUtil.renderJson(response, page);
 		return null;
@@ -66,18 +63,18 @@ public class ResourceController {
 	}
 
 	@RequestMapping(value = "delete/{id}")
-	public String delete(@PathVariable("id") Long id,  HttpServletResponse response) {
-		resourceService.deleteResource(id);
+	public String delete(@PathVariable("id") Long id, HttpServletResponse response) {
+		roleService.delete(id);
 		JsonUtil.renderSuccess("保存成功", response);
 		return null;
 	}
-	
+
 	@RequestMapping(value = "saveBatch")
 	public String saveBatch(HttpServletRequest request, HttpServletResponse response) {
-		List<Resource> insertedRecords = (List<Resource>) JsonUtil.getInsertRecords(Resource.class, request);
-		List<Resource> updatedRecords = (List<Resource>) JsonUtil.getUpdatedRecords(Resource.class, request);
-		List<Resource> deletedRecords = (List<Resource>) JsonUtil.getDeletedRecords(Resource.class, request);
-		resourceService.saveResources(insertedRecords, updatedRecords, deletedRecords);
+		List<Role> insertedRecords = JsonUtil.getInsertRecords(Role.class, request);
+		List<Role> updatedRecords = JsonUtil.getUpdatedRecords(Role.class, request);
+		List<Role> deletedRecords = JsonUtil.getDeletedRecords(Role.class, request);
+		roleService.saveBatch(insertedRecords, updatedRecords, deletedRecords);
 		JsonUtil.renderSuccess("保存成功", response);
 		return null;
 	}
