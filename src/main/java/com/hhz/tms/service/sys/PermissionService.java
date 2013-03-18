@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.hhz.tms.dao.sys.PermissionDao;
 import com.hhz.tms.entity.sys.Permission;
-import com.hhz.tms.entity.sys.Resource;
 
 /**
  * @author huangjian
