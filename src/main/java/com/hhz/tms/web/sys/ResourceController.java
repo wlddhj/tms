@@ -73,12 +73,7 @@ public class ResourceController extends SingleCrudControll<Resource> {
 	public void savePerm(@PathVariable("id") Long id, HttpServletRequest request,HttpServletResponse response) {
 		String permids=request.getParameter("permids");
 		resourceService.savePerms(id, permids);
-		Resource resource = resourceService.getEntity(id);
-		List<Permission> permissions = permissionService.findAll();
-		EasyTreeNode treeNode = EasyTreeUtil.getResourcePermTree(permissions, resource);
-		List<EasyTreeNode> list = new ArrayList<EasyTreeNode>();
-		list.add(treeNode);
-		RenderUtil.renderJson(list, response);
+		permission(id, response);
 	}
 
 	@Override

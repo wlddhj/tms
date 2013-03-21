@@ -86,6 +86,14 @@
 						</li>
 						<li>
 							<div>
+							<a href="javascript:addTab('权限分配','${ctx}/admin/permission/assign')">
+								<span class="icon icon-dict">&nbsp;</span>
+								<span class="nav">权限分配</span>
+							</a>
+							</div>
+						</li>
+						<li>
+							<div>
 							<a href="javascript:addTab('角色管理','${ctx}/admin/role')">
 								<span class="icon icon-dict">&nbsp;</span>
 								<span class="nav">角色管理</span>

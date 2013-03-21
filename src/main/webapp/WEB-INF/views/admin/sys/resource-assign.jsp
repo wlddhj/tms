@@ -67,12 +67,12 @@ function save(){
 	}
 	$.post("${ctx}/admin/resource/savePerm/"+curRowId,{permids:s},function(result) {
 		$("#tree").tree('loadData',result);
-            $.messager.show({  
+            $.messager.show({
                 title:'Tip',
                 msg:'保存成功',
                 timeout:2000,
-                showType:'show'  
-            });  
+                showType:'show'
+            });
 	});
 }
 function refresh(){

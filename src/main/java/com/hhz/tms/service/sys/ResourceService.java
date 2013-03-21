@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.hhz.tms.dao.BaseDao;
 import com.hhz.tms.dao.sys.ResourceDao;
+import com.hhz.tms.entity.sys.Menu;
 import com.hhz.tms.entity.sys.Permission;
 import com.hhz.tms.entity.sys.Resource;
 import com.hhz.tms.service.BaseService;
@@ -39,7 +40,19 @@ public class ResourceService extends BaseService<Resource> {
 	public void savePerms(Long id, String permids) {
 		String[] ids = permids.split(",");
 		Resource resource = getEntity(id);
-		resource.getPermissions().clear();
+		// 删除不存在的记录
+		List<Permission> permissions = resource.getPermissions();
+		for (Iterator<Permission> it = permissions.iterator(); it.hasNext();) {
+			Permission permission = it.next();
+			if (!ArrayUtils.contains(ids, String.valueOf(permission.getId()))) {
+				// 删除不存在的记录
+				it.remove();
+			} else {
+				// 已有的记录不动
+				ids = ArrayUtils.removeElement(ids, String.valueOf(permission.getId()));
+			}
+		}
+		// 新增新记录
 		for (String strId : ids) {
 			if (StringUtils.isNotBlank(strId)) {
 				Long id_new = Long.valueOf(strId);

@@ -80,10 +80,13 @@ public class CollectionUtil {
 		}
 		return lstTmp;
 	}
+
 	public static Set<String> array2Set(String[] strArray) {
 		Set<String> lstTmp = new HashSet<String>();
-		for (String string : strArray) {
-			lstTmp.add(string);
+		if (strArray != null) {
+			for (String string : strArray) {
+				lstTmp.add(string);
+			}
 		}
 		return lstTmp;
 	}
