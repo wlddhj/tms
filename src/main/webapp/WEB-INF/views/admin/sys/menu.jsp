@@ -9,7 +9,7 @@
 <body class="easyui-layout" >
 <div data-options="region:'north'" style="height:30px;overflow:hidden;" border="false">
 </div>
-	<div data-options="region:'west',split:true"  style="width:160px;">
+	<div data-options="region:'west'"  style="width:380px;">
 	  	<ul id="tt">
 	  	</ul>
 	</div>

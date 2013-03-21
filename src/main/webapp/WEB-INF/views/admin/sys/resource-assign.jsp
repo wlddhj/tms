@@ -22,11 +22,11 @@
 </div>
 <div region="center" border="false">
 	<div class="easyui-layout" fit="true">
-		<div region="center">
+		<div region="center" title="权限" style="padding:10px;">
 			<ul id="tree"></ul>
 		</div>
 		
-		<div region="south" border="false" style="height: 40px;padding:5px;">
+		<div region="south" style="height: 40px;padding:5px;">
 		<div>  
         <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="save();">Save</a> 
 		<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-reload'" onclick="refresh();">Refresh</a>  
