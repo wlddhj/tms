@@ -7,6 +7,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -74,6 +75,13 @@ public class CollectionUtil {
 
 	public static List<String> array2List(String[] strArray) {
 		List<String> lstTmp = new ArrayList<String>();
+		for (String string : strArray) {
+			lstTmp.add(string);
+		}
+		return lstTmp;
+	}
+	public static Set<String> array2Set(String[] strArray) {
+		Set<String> lstTmp = new HashSet<String>();
 		for (String string : strArray) {
 			lstTmp.add(string);
 		}

@@ -14,10 +14,13 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.data.domain.Page;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 
 /**
@@ -82,11 +85,19 @@ public class JsonUtil {
 		} catch (Exception ex) {
 			format = new SimpleDateFormat(DateOperator.FORMAT_STR);
 		}
-		SimpleModule testModule = new SimpleModule("BooleanModule",Version.unknownVersion());
-		ToStringSerializer stringSerializer=new ToStringSerializer();
+		SimpleModule testModule = new SimpleModule("BooleanModule", Version.unknownVersion());
+		ToStringSerializer stringSerializer = new ToStringSerializer();
 		testModule.addSerializer(boolean.class, stringSerializer);
 		mapper.registerModule(testModule);
 		mapper.setDateFormat(format);
+		SimpleBeanPropertyFilter propertyFilter = SimpleBeanPropertyFilter.serializeAllExcept(CollectionUtil
+				.array2Set(excludes));
+		SimpleFilterProvider filters = new SimpleFilterProvider().addFilter("excludeFilter", propertyFilter);
+		mapper.setFilters(filters);
+		// 去掉null值
+		mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+		// mapper.configure(JsonGenerator.Feature.WRITE_NUMBERS_AS_STRINGS,
+		// true);
 		String jsonString = "";
 		try {
 			jsonString = mapper.writeValueAsString(obj);

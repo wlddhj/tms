@@ -5,6 +5,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+
 /**
  * 统一定义id的entity基类.
  * 
@@ -13,7 +15,8 @@ import javax.persistence.MappedSuperclass;
  * 
  * @author calvin
  */
-//JPA 基类的标识
+// JPA 基类的标识
+@JsonFilter("excludeFilter")
 @MappedSuperclass
 public abstract class IdEntity {
 
