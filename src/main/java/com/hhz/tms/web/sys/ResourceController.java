@@ -14,7 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.hhz.tms.entity.sys.Permission;
 import com.hhz.tms.entity.sys.Resource;
@@ -64,7 +63,7 @@ public class ResourceController extends SingleCrudControll<Resource> {
 	public void permission(@PathVariable("id") Long id, HttpServletResponse response) {
 		Resource resource = resourceService.getEntity(id);
 		List<Permission> permissions = permissionService.findAll();
-		EasyTreeNode treeNode = EasyTreeUtil.getResourcePermTree(permissions, resource);
+		EasyTreeNode treeNode = EasyTreeUtil.gePermCheckedTree(permissions, resource.getPermissions());
 		List<EasyTreeNode> list = new ArrayList<EasyTreeNode>();
 		list.add(treeNode);
 		RenderUtil.renderJson(list, response);

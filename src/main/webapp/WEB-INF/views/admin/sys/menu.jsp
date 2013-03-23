@@ -7,13 +7,12 @@
 <%@ include file="/WEB-INF/layouts/admin/header.jsp"%>
 </head>
 <body class="easyui-layout" >
-<div data-options="region:'north'" style="height:30px;overflow:hidden;" border="false">
-</div>
-	<div data-options="region:'west'"  style="width:380px;">
+
+	<div data-options="region:'west'" title="菜单" style="width:380px;">
 	  	<ul id="tt">
 	  	</ul>
 	</div>
-	<div data-options="region:'center'">
+	<div data-options="region:'center'" title="详细信息"  style="">
 		<div class="easyui-layout" style="width:100%;height:100%;">
 	       	<div region="center" border="false" id="divRightContent">
 	       	

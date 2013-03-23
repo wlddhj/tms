@@ -31,9 +31,8 @@ public class EasyTreeUtil {
 	}
 
 	/** 资源权限树 */
-	public static EasyTreeNode getResourcePermTree(List<Permission> permissions, Resource resource) {
+	public static EasyTreeNode gePermCheckedTree(List<Permission> permissions, List<Permission> lstSelect) {
 		EasyTreeNode root = getRoot("All Permissions");
-		List<Permission> lstSelect = resource.getPermissions();
 		for (Permission permission : permissions) {
 			EasyTreeNode resultVo = new EasyTreeNode();
 			resultVo.setText(permission.getPermName() + "(" + permission.getPermCd() + ")");
@@ -44,6 +43,7 @@ public class EasyTreeUtil {
 		}
 		return root;
 	}
+
 	/** 权限角色树 */
 	public static EasyTreeNode getPermRoleTree(List<Role> roles, List<Role> lstSelect) {
 		EasyTreeNode root = getRoot("All Roles");
@@ -57,6 +57,7 @@ public class EasyTreeUtil {
 		}
 		return root;
 	}
+
 	/** 权限资源树 */
 	public static EasyTreeNode getPermResourceTree(List<Resource> resources, List<Resource> lstSelect) {
 		EasyTreeNode root = getRoot("All Resources");

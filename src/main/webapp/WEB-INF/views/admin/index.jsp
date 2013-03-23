@@ -78,6 +78,14 @@
 						</li>
 						<li>
 							<div>
+							<a href="javascript:addTab('菜单分配','${ctx}/admin/menu/assign')">
+								<span class="icon icon-dict">&nbsp;</span>
+								<span class="nav">菜单分配</span>
+							</a>
+							</div>
+						</li>
+						<li>
+							<div>
 							<a href="javascript:addTab('权限管理','${ctx}/admin/permission')">
 								<span class="icon icon-dict">&nbsp;</span>
 								<span class="nav">权限管理</span>
@@ -97,6 +105,14 @@
 							<a href="javascript:addTab('角色管理','${ctx}/admin/role')">
 								<span class="icon icon-dict">&nbsp;</span>
 								<span class="nav">角色管理</span>
+							</a>
+							</div>
+						</li>
+						<li>
+							<div>
+							<a href="javascript:addTab('角色分配','${ctx}/admin/role/assign')">
+								<span class="icon icon-dict">&nbsp;</span>
+								<span class="nav">角色分配</span>
 							</a>
 							</div>
 						</li>
@@ -126,17 +142,9 @@
 					<ul>
 						<li>
 							<div>
-							<a href="javascript:addTab('数据字典','${ctx}/admin/resource')">
+							<a href="javascript:addTab('数据字典','${ctx}/admin/dict')">
 								<span class="icon icon-dict">&nbsp;</span>
 								<span class="nav">数据字典</span>
-							</a>
-							</div>
-						</li>
-						<li>
-							<div>
-							<a href="javascript:addTab('系统参数','${ctx}/admin/resource')">
-								<span class="icon icon-dict">&nbsp;</span>
-								<span class="nav">系统参数</span>
 							</a>
 							</div>
 						</li>

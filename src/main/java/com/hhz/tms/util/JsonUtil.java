@@ -83,7 +83,7 @@ public class JsonUtil {
 		try {
 			format = new SimpleDateFormat(dateformat);
 		} catch (Exception ex) {
-			format = new SimpleDateFormat(DateOperator.FORMAT_STR);
+			format = DateOperator.defaultDateFormaterWithTime;
 		}
 		SimpleModule testModule = new SimpleModule("BooleanModule", Version.unknownVersion());
 		ToStringSerializer stringSerializer = new ToStringSerializer();
@@ -187,7 +187,7 @@ public class JsonUtil {
 		ObjectMapper mapper = getObjectMapper();
 
 		List<T> list = new ArrayList<T>();
-
+		mapper.setDateFormat(DateOperator.defaultDateFormaterWithTime);
 		try {
 			JSONObject jsonObject = new JSONObject(json);
 			JSONArray array = jsonObject.getJSONArray(key);

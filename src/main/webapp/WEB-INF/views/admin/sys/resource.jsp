@@ -125,7 +125,7 @@
 				}
 				lastIndex = index;
 				focusEditor(field,lastIndex);
-			},
+			}
 		});
 	});
 	function focusEditor(field,editIndex){

@@ -58,14 +58,16 @@
 				iconCls:'icon-add',
 				handler:function(){
 					$('#tt').datagrid('endEdit', lastIndex);
-					$('#tt').datagrid('appendRow',{
-						permCd:'',
-						permName:'',
-						remark:''
-					});
+					var field={
+							permCd:'',
+							permName:'',
+							remark:''
+						}
+					$('#tt').datagrid('appendRow',field);
 					lastIndex = $('#tt').datagrid('getRows').length-1;
 					$('#tt').datagrid('selectRow', lastIndex);
 					$('#tt').datagrid('beginEdit', lastIndex);
+					focusEditor(field,lastIndex);
 				}
 			},'-',{
 				text:'保存',
@@ -102,12 +104,21 @@
 					}
 				}
 			},'-'],
-			onClickRow:function(rowIndex,rowData){
-				if (lastIndex != rowIndex){
+			onDblClickCell:function(index,field){
+				if (lastIndex != index){
 					$('#tt').datagrid('endEdit', lastIndex);
 					$('#tt').datagrid('beginEdit', rowIndex);
 				}
 				lastIndex = rowIndex;
+				focusEditor(field,lastIndex);
+			},
+			onClickCell:function(index,field){
+				if (lastIndex != index){
+					$('#tt').datagrid('endEdit', lastIndex);
+					$('#tt').datagrid('beginEdit', index);
+				}
+				lastIndex = index;
+				focusEditor(field,lastIndex);
 			}
 		});
 	});
@@ -139,6 +150,17 @@
 				alert(rObj.failure);
 			}
 		});
+		}
+	}
+	function focusEditor(field,editIndex){
+		var editor = $('#tt').datagrid('getEditor', {index:editIndex,field:field});
+		if (editor){
+			editor.target.focus();
+		} else {
+			var editors = $('#tt').datagrid('getEditors', editIndex);
+			if (editors.length){
+				editors[0].target.focus();
+			}
 		}
 	}
 </script>

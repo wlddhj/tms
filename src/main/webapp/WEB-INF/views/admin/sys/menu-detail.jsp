@@ -2,7 +2,16 @@
 <%@ include file="/WEB-INF/layouts/taglib.jsp" %>
 <!DOCTYPE html>
 <html>
-
+<script>
+		$(document).ready(function() {
+			$("#inputForm").validate({
+				 submitHandler: function(form)
+				   {
+					 save();
+				   }
+			});
+		});
+	</script>
 <body>
 	<form id="inputForm" action="${ctx}/admin/menu/save" method="post" class="form-horizontal">
 		<input type="hidden" name="id" value="${menu.id}"/>
@@ -12,7 +21,7 @@
 			<div class="control-group">
 				<label for="menuName" class="control-label">菜单名称:</label>
 				<div class="controls">
-					<input type="text" id="menuName" name="menuName"  value="${menu.menuName}" class="input-large required" minlength="3"/>
+					<input type="text" id="menuName" name="menuName" required="true" value="${menu.menuName}" class="input-large required" minlength="3"/>
 				</div>
 			</div>	
 			<div class="control-group">
@@ -35,7 +44,7 @@
             </label>
 			</div>
 			<div class="form-actions">
-				<input id="submit_btn" class="btn btn-primary" type="button" onclick="save();" value="提交"/>&nbsp;	
+				<input id="submit_btn" class="btn btn-primary" type="submit" value="提交"/>&nbsp;	
 				<input id="cancel_btn" class="btn" type="reset" value="取消"/>
 			</div>
 	</form>

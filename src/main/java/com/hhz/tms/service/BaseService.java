@@ -41,8 +41,8 @@ public abstract class BaseService<T extends IdEntity> {
 	}
 
 	@Transactional(readOnly = false)
-	public void save(T entity) {
-		getBaseDao().save(entity);
+	public T save(T entity) {
+		return getBaseDao().save(entity);
 	}
 
 	@Transactional(readOnly = false)
