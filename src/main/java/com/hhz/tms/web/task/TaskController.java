@@ -16,13 +16,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import com.hhz.tms.entity.Task;
-import com.hhz.tms.entity.User;
-import com.hhz.tms.service.account.ShiroDbRealm.ShiroUser;
-import com.hhz.tms.service.task.TaskService;
 import org.springside.modules.web.Servlets;
 
 import com.google.common.collect.Maps;
+import com.hhz.tms.entity.Task;
+import com.hhz.tms.entity.sys.User;
+import com.hhz.tms.service.account.ShiroDbRealm.ShiroUser;
+import com.hhz.tms.service.task.TaskService;
 
 /**
  * Task管理的Controller, 使用Restful风格的Urls:

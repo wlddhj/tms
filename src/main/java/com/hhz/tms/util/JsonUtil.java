@@ -87,7 +87,8 @@ public class JsonUtil {
 		}
 		SimpleModule testModule = new SimpleModule("BooleanModule", Version.unknownVersion());
 		ToStringSerializer stringSerializer = new ToStringSerializer();
-		testModule.addSerializer(boolean.class, stringSerializer);
+//		testModule.addSerializer(boolean.class, stringSerializer);
+//		testModule.addSerializer(Boolean.class, new ToStringSerializer());
 		mapper.registerModule(testModule);
 		mapper.setDateFormat(format);
 		SimpleBeanPropertyFilter propertyFilter = SimpleBeanPropertyFilter.serializeAllExcept(CollectionUtil

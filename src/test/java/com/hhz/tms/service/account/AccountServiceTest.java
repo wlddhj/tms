@@ -1,6 +1,9 @@
 package com.hhz.tms.service.account;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
 
 import java.util.Date;
 
@@ -10,15 +13,15 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-
-import com.hhz.tms.dao.TaskDao;
-import com.hhz.tms.dao.UserDao;
-import com.hhz.tms.data.UserData;
-import com.hhz.tms.entity.User;
-import com.hhz.tms.service.ServiceException;
-import com.hhz.tms.service.account.ShiroDbRealm.ShiroUser;
 import org.springside.modules.test.security.shiro.ShiroTestUtils;
 import org.springside.modules.utils.DateProvider.ConfigurableDateProvider;
+
+import com.hhz.tms.dao.TaskDao;
+import com.hhz.tms.dao.sys.UserDao;
+import com.hhz.tms.data.UserData;
+import com.hhz.tms.entity.sys.User;
+import com.hhz.tms.service.ServiceException;
+import com.hhz.tms.service.account.ShiroDbRealm.ShiroUser;
 
 /**
  * AccountService的测试用例, 测试Service层的业务逻辑.

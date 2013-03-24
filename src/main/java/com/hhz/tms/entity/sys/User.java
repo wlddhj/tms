@@ -11,6 +11,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -19,6 +20,9 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.BooleanSerializer;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.hhz.tms.entity.IdEntity;
 
 /**
@@ -26,6 +30,7 @@ import com.hhz.tms.entity.IdEntity;
  * @author huangjian
  *
  */
+@Entity
 @Table(name = "t_sys_user")
 public class User extends IdEntity {
 	private String loginName;
@@ -34,7 +39,9 @@ public class User extends IdEntity {
 	private String password;
 	private String salt;
 	private Date registerDate;
+	private Boolean enableFlg;
 	private List<Role> roles;
+	private Dept dept;
 	public User() {
 	}
 
@@ -61,7 +68,7 @@ public class User extends IdEntity {
 	}
 	@JsonIgnore
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "t_sys_role_user_rela", joinColumns = { @JoinColumn(name = "permission_id") }, inverseJoinColumns = { @JoinColumn(name = "user_id") })
+	@JoinTable(name = "t_sys_role_user_rela", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = { @JoinColumn(name = "role_id") })
 	public List<Role> getRoles() {
 		return roles;
 	}
@@ -110,5 +117,22 @@ public class User extends IdEntity {
 	@Override
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this);
+	}
+	@ManyToOne
+	@JoinColumn(name="dept_id")
+	public Dept getDept() {
+		return dept;
+	}
+
+	public void setDept(Dept dept) {
+		this.dept = dept;
+	}
+	@JsonSerialize(using=ToStringSerializer.class)
+	public Boolean getEnableFlg() {
+		return enableFlg;
+	}
+
+	public void setEnableFlg(Boolean enableFlg) {
+		this.enableFlg = enableFlg;
 	}
 }

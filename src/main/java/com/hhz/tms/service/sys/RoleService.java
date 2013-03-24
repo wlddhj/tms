@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.hhz.tms.dao.BaseDao;
+import com.hhz.tms.dao.sys.PermissionDao;
 import com.hhz.tms.dao.sys.RoleDao;
 import com.hhz.tms.entity.sys.Permission;
 import com.hhz.tms.entity.sys.Role;
@@ -28,7 +29,8 @@ import com.hhz.tms.service.BaseService;
 public class RoleService  extends BaseService<Role>{
 	@Autowired
 	private RoleDao roleDao;
-
+	@Autowired
+	private PermissionDao permissionDao;
 	@Override
 	public BaseDao<Role> getBaseDao() {
 		// TODO Auto-generated method stub
@@ -63,7 +65,7 @@ public class RoleService  extends BaseService<Role>{
 			if (StringUtils.isNotBlank(strId)) {
 				Long id_new = Long.valueOf(strId);
 				if (id_new > 0) {
-					Permission permission = new Permission();
+					Permission permission = permissionDao.findOne(id_new);
 					permission.setId(id_new);
 					role.getPermissions().add(permission);
 				}

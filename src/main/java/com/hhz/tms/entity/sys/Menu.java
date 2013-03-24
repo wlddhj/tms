@@ -14,6 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.hhz.tms.entity.IdEntity;
 
 /**
@@ -26,7 +28,7 @@ public class Menu extends IdEntity {
 	private String url;
 	private String menuName;
 	private String remark;
-	private boolean enableFlg;
+	private Boolean enableFlg;
 	private Menu parent;
 	private List<Menu> children;
 	private List<Permission> permissions;
@@ -95,12 +97,12 @@ public class Menu extends IdEntity {
 	public void setPermissions(List<Permission> permissions) {
 		this.permissions = permissions;
 	}
-
-	public boolean isEnableFlg() {
+	@JsonSerialize(using=ToStringSerializer.class)
+	public Boolean getEnableFlg() {
 		return enableFlg;
 	}
 
-	public void setEnableFlg(boolean enableFlg) {
+	public void setEnableFlg(Boolean enableFlg) {
 		this.enableFlg = enableFlg;
 	}
 }

@@ -9,15 +9,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.hhz.tms.dao.TaskDao;
-import com.hhz.tms.dao.UserDao;
-import com.hhz.tms.entity.User;
-import com.hhz.tms.service.ServiceException;
-import com.hhz.tms.service.account.ShiroDbRealm.ShiroUser;
 import org.springside.modules.security.utils.Digests;
 import org.springside.modules.utils.DateProvider;
 import org.springside.modules.utils.Encodes;
+
+import com.hhz.tms.dao.TaskDao;
+import com.hhz.tms.dao.sys.UserDao;
+import com.hhz.tms.entity.sys.User;
+import com.hhz.tms.service.ServiceException;
+import com.hhz.tms.service.account.ShiroDbRealm.ShiroUser;
 
 /**
  * 用户管理类.
@@ -54,7 +54,7 @@ public class AccountService {
 	@Transactional(readOnly = false)
 	public void registerUser(User user) {
 		entryptPassword(user);
-		user.setRoles("user");
+//		user.setRoles("user");
 		user.setRegisterDate(dateProvider.getDate());
 
 		userDao.save(user);

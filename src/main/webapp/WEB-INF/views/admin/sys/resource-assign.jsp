@@ -22,7 +22,7 @@
 </div>
 <div region="center" border="false">
 	<div class="easyui-layout" fit="true">
-		<div region="center" title="权限" style="padding:10px;">
+		<div region="center" title="权限" >
 			<ul id="tree"></ul>
 		</div>
 		

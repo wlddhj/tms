@@ -19,6 +19,8 @@
 package com.hhz.tms.service.account;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 
@@ -34,10 +36,13 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.hhz.tms.entity.User;
 import org.springside.modules.utils.Encodes;
 
 import com.google.common.base.Objects;
+import com.hhz.tms.entity.sys.Permission;
+import com.hhz.tms.entity.sys.Role;
+import com.hhz.tms.entity.sys.User;
+import com.hhz.tms.util.CollectionUtil;
 
 public class ShiroDbRealm extends AuthorizingRealm {
 
@@ -67,8 +72,23 @@ public class ShiroDbRealm extends AuthorizingRealm {
 		ShiroUser shiroUser = (ShiroUser) principals.getPrimaryPrincipal();
 		User user = accountService.findUserByLoginName(shiroUser.loginName);
 		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-		info.addRoles(user.getRoleList());
+		List<Role> roles = user.getRoles();
+
+		List<String> roleCds = CollectionUtil.getPropList(roles, "roleCd");
+		info.addRoles(roleCds);
+		info.addStringPermissions(getAllPerms(roles));
 		return info;
+	}
+
+	private List<String> getAllPerms(List<Role> roles) {
+		List<Permission> permissions = new ArrayList<Permission>();
+		for (Role role : roles) {
+			if (role.getPermissions() != null) {
+				permissions.addAll(role.getPermissions());
+			}
+		}
+		List<String> permCds = CollectionUtil.getPropList(permissions, "permCd");
+		return permCds;
 	}
 
 	/**

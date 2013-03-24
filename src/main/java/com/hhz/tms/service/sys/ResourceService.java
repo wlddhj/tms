@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.hhz.tms.dao.BaseDao;
+import com.hhz.tms.dao.sys.PermissionDao;
 import com.hhz.tms.dao.sys.ResourceDao;
 import com.hhz.tms.entity.sys.Menu;
 import com.hhz.tms.entity.sys.Permission;
@@ -30,7 +31,8 @@ import com.hhz.tms.service.BaseService;
 public class ResourceService extends BaseService<Resource> {
 	@Autowired
 	private ResourceDao resourceDao;
-
+	@Autowired
+	private PermissionDao permissionDao;
 	public List<Resource> findAllEnable() {
 		return resourceDao.findByEnableFlgOrderByUrlAsc(true);
 	}
@@ -57,7 +59,7 @@ public class ResourceService extends BaseService<Resource> {
 			if (StringUtils.isNotBlank(strId)) {
 				Long id_new = Long.valueOf(strId);
 				if (id_new > 0) {
-					Permission permission = new Permission();
+					Permission permission = permissionDao.findOne(id_new);
 					permission.setId(id_new);
 					resource.getPermissions().add(permission);
 				}

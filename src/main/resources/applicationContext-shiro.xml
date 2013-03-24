@@ -12,10 +12,10 @@
 	</bean>
 
 	<!-- 項目自定义的Realm, 所有accountService依赖的dao都需要用depends-on声明 -->
-	<bean id="shiroDbRealm" class="com.hhz.tms.service.account.ShiroDbRealm" depends-on="userDao,taskDao">
+	<bean id="shiroDbRealm" class="com.hhz.tms.service.account.ShiroDbRealm" depends-on="userDao,taskDao,menuDao">
 		<property name="accountService" ref="accountService"/>
 	</bean>
-	<bean id="chainDefinitionSectionMetaSource" class="com.hhz.tms.service.ChainDefinitionSectionMetaSource" depends-on="resourceDao">
+	<bean id="chainDefinitionSectionMetaSource" class="com.hhz.tms.service.ChainDefinitionSectionMetaSource" depends-on="resourceDao,permissionDao">
    		<property name="filterChainDefinitions">
 	        <value>
 	            /login = authc
@@ -23,8 +23,6 @@
 	            /static/** = anon
 	            /register/** = anon
 	            /api/** = anon
-	            /** = user
-	            /admin/** =  roles[admin]
 	        </value>
 	    </property>
 	</bean>
@@ -35,7 +33,7 @@
 		<property name="successUrl" value="/" />
 		<!-- shiro连接约束配置,在这里使用自定义的动态获取资源类 -->
     	<property name="filterChainDefinitionMap" ref="chainDefinitionSectionMetaSource" />
-		<!-- 
+		<!--
 		<property name="filterChainDefinitions">
 			<value>
 				/login = authc
@@ -47,7 +45,7 @@
 				/** = user
 			</value>
 		</property>
-		 -->
+		  -->
 	</bean>
 	
 	<!-- 用户授权信息Cache, 采用EhCache -->

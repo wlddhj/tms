@@ -32,8 +32,6 @@ public class DictType extends IdEntity {
 	private String dictTypeName;
 	private BigDecimal dispOrderNo;
 	private String remark;
-	private Date createdDate;
-	private Date updatedDate;
 	private List<DictData> dictDatas;
 
 	public String getDictTypeCd() {
@@ -67,23 +65,6 @@ public class DictType extends IdEntity {
 
 	public void setRemark(String remark) {
 		this.remark = remark;
-	}
-
-	@Column(updatable = false)
-	public Date getCreatedDate() {
-		return this.createdDate;
-	}
-
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
-	}
-
-	public Date getUpdatedDate() {
-		return this.updatedDate;
-	}
-
-	public void setUpdatedDate(Date updatedDate) {
-		this.updatedDate = updatedDate;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY,mappedBy="dictType",cascade=CascadeType.ALL)

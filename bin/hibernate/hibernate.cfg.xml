@@ -30,15 +30,17 @@
 		<property name="hibernate.connection.password">root</property>
 		
 		<mapping class="com.hhz.tms.entity.IdEntity" />
-		<!-- 
+		<!--  -->
 		<mapping class="com.hhz.tms.entity.sys.Permission" />
 		<mapping class="com.hhz.tms.entity.sys.Resource" />
 		<mapping class="com.hhz.tms.entity.sys.Role" />
 		<mapping class="com.hhz.tms.entity.sys.Menu" />
 		<mapping class="com.hhz.tms.entity.sys.User" />
+		<mapping class="com.hhz.tms.entity.sys.Dept" />
+		<mapping class="com.hhz.tms.entity.sys.User" />
+		
 		<mapping class="com.hhz.tms.entity.Task" />
-		<mapping class="com.hhz.tms.entity.User" />
-		 -->
+		
 		<mapping class="com.hhz.tms.entity.app.DictType" />
 		<mapping class="com.hhz.tms.entity.app.DictData" />
 		

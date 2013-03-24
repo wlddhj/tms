@@ -1,8 +1,9 @@
 package com.hhz.tms.data;
 
-import com.hhz.tms.entity.Task;
-import com.hhz.tms.entity.User;
 import org.springside.modules.test.data.RandomData;
+
+import com.hhz.tms.entity.Task;
+import com.hhz.tms.entity.sys.User;
 
 /**
  * Task相关实体测试数据生成.

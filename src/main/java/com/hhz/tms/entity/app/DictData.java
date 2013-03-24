@@ -34,8 +34,6 @@ public class DictData extends IdEntity {
 	private BigDecimal dispOrderNo;
 	private String remark;
 	private String i18n;
-	private Date createdDate;
-	private Date updatedDate;
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "dict_type_id")
@@ -79,23 +77,6 @@ public class DictData extends IdEntity {
 
 	public void setRemark(String remark) {
 		this.remark = remark;
-	}
-
-	@Column(updatable = false)
-	public Date getCreatedDate() {
-		return this.createdDate;
-	}
-
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
-	}
-
-	public Date getUpdatedDate() {
-		return this.updatedDate;
-	}
-
-	public void setUpdatedDate(Date updatedDate) {
-		this.updatedDate = updatedDate;
 	}
 
 	public String getI18n() {

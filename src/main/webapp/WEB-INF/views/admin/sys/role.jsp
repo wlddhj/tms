@@ -37,21 +37,9 @@
 			rownumbers:true,
 			pageList:[50,40,30,20,10],
 			columns:[[
-				{field:'roleCd',title:'角色代码',editor:{type:'validatebox',options:{required:'true',validType:'length[1,50]'}}, sortable:true, width:200,
-					formatter:function(value,row,index){
-						return '<div style="overflow: hidden; white-space: nowrap; text-overflow:ellipsis;" title="'+value+'">'+value+'</div>';
-					}
-				},
-				{field:'roleName',title:'角色名称',editor:{type:'validatebox',options:{required:'true',validType:'length[1,50]'}}, sortable:true, width:200,
-					formatter:function(value,row,index){
-						return '<div style="overflow: hidden; white-space: nowrap; text-overflow:ellipsis;" title="'+value+'">'+value+'</div>';
-					}
-				},
-				{field:'remark',title:'备注',editor:{type:'text'}, sortable:true, width:300,
-					formatter:function(value,row,index){
-						return '<div style="overflow: hidden; white-space: nowrap; text-overflow:ellipsis;" title="'+value+'">'+value+'</div>';
-					}
-				}
+				{field:'roleCd',title:'角色代码',editor:{type:'validatebox',options:{required:'true',validType:'length[1,50]'}}, sortable:true, width:200},
+				{field:'roleName',title:'角色名称',editor:{type:'validatebox',options:{required:'true',validType:'length[1,50]'}}, sortable:true, width:200},
+				{field:'remark',title:'备注',editor:{type:'text'}, sortable:true, width:300}
 			]],
 			toolbar:[{
 				text:'新增',
@@ -105,11 +93,9 @@
 				}
 			},'-'],
 			onDblClickCell:function(index,field){
-				if (lastIndex != index){
-					$('#tt').datagrid('endEdit', lastIndex);
-					$('#tt').datagrid('beginEdit', rowIndex);
-				}
-				lastIndex = rowIndex;
+				$('#tt').datagrid('endEdit', lastIndex);
+				$('#tt').datagrid('beginEdit', index);
+				lastIndex = index;
 				focusEditor(field,lastIndex);
 			},
 			onClickCell:function(index,field){

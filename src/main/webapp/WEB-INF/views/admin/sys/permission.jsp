@@ -105,11 +105,9 @@
 				}
 			},'-'],
 			onDblClickCell:function(index,field){
-				if (lastIndex != index){
-					$('#tt').datagrid('endEdit', lastIndex);
-					$('#tt').datagrid('beginEdit', rowIndex);
-				}
-				lastIndex = rowIndex;
+				$('#tt').datagrid('endEdit', lastIndex);
+				$('#tt').datagrid('beginEdit', index);
+				lastIndex = index;
 				focusEditor(field,lastIndex);
 			},
 			onClickCell:function(index,field){

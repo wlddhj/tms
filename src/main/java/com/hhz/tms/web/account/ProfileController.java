@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.hhz.tms.entity.User;
+import com.hhz.tms.entity.sys.User;
 import com.hhz.tms.service.account.AccountService;
 import com.hhz.tms.util.ShiroUtil;
 

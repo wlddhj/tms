@@ -324,4 +324,16 @@ public class CollectionUtil {
 		Object rtn = getEntityFromList(list, tarProp, tarValue);
 		return rtn != null;
 	}
+	public static <T> List<T> getPropList(Collection<?> list,String propName){
+		List<T> lstResult=new ArrayList<T>();
+		for(Object obj:list){
+			try {
+				T val=(T)PropertyUtils.getSimpleProperty(obj, propName);
+				lstResult.add(val);
+			}catch (Exception e) {
+				e.printStackTrace();
+			} 
+		}
+		return lstResult;
+	}
 }

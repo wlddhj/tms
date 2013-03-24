@@ -15,7 +15,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.hhz.tms.dao.BaseDao;
+import com.hhz.tms.dao.sys.MenuDao;
 import com.hhz.tms.dao.sys.PermissionDao;
+import com.hhz.tms.dao.sys.ResourceDao;
+import com.hhz.tms.dao.sys.RoleDao;
 import com.hhz.tms.entity.sys.Menu;
 import com.hhz.tms.entity.sys.Permission;
 import com.hhz.tms.entity.sys.Resource;
@@ -32,7 +35,12 @@ import com.hhz.tms.service.BaseService;
 public class PermissionService extends BaseService<Permission> {
 	@Autowired
 	private PermissionDao permissionDao;
-
+	@Autowired
+	private ResourceDao resourceDao;
+	@Autowired
+	private RoleDao roleDao;
+	@Autowired
+	private MenuDao menuDao;
 	@Override
 	public BaseDao<Permission> getBaseDao() {
 		// TODO Auto-generated method stub
@@ -71,7 +79,7 @@ public class PermissionService extends BaseService<Permission> {
 			if (StringUtils.isNotBlank(strId)) {
 				Long id_new = Long.valueOf(strId);
 				if (id_new > 0) {
-					Menu menu = new Menu();
+					Menu menu =menuDao.findOne(id_new);
 					menu.setId(id_new);
 					permission.getMenus().add(menu);
 				}
@@ -98,7 +106,7 @@ public class PermissionService extends BaseService<Permission> {
 			if (StringUtils.isNotBlank(strId)) {
 				Long id_new = Long.valueOf(strId);
 				if (id_new > 0) {
-					Resource resource = new Resource();
+					Resource resource = resourceDao.findOne(id_new);
 					resource.setId(id_new);
 					permission.getResources().add(resource);
 				}
@@ -125,7 +133,7 @@ public class PermissionService extends BaseService<Permission> {
 			if (StringUtils.isNotBlank(strId)) {
 				Long id_new = Long.valueOf(strId);
 				if (id_new > 0) {
-					Role role = new Role();
+					Role role = roleDao.findOne(id_new);
 					role.setId(id_new);
 					permission.getRoles().add(role);
 				}

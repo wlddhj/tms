@@ -19,6 +19,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.hhz.tms.dao.sys.MenuDao;
+import com.hhz.tms.dao.sys.PermissionDao;
 import com.hhz.tms.entity.sys.Menu;
 import com.hhz.tms.entity.sys.Permission;
 import com.hhz.tms.util.WebUtil;
@@ -34,6 +35,10 @@ import com.hhz.tms.util.WebUtil;
 public class MenuService {
 	@Autowired
 	private MenuDao menuDao;
+
+	@Autowired
+	private PermissionDao permissionDao;
+	
 	public List<Menu> findAll() {
 		Sort sort = new Sort(Direction.ASC, "menuName");
 		List<Menu> menus = (List<Menu>) menuDao.findAll(sort);
@@ -74,7 +79,7 @@ public class MenuService {
 			if (StringUtils.isNotBlank(strId)) {
 				Long id_new = Long.valueOf(strId);
 				if (id_new > 0) {
-					Permission permission = new Permission();
+					Permission permission = permissionDao.findOne(id_new);
 					permission.setId(id_new);
 					menu.getPermissions().add(permission);
 				}

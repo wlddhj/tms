@@ -1,9 +1,13 @@
 package com.hhz.tms.entity;
 
+import java.util.Date;
+
+import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.Version;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 
@@ -21,7 +25,9 @@ import com.fasterxml.jackson.annotation.JsonFilter;
 public abstract class IdEntity {
 
 	protected Long id;
-
+	private Date createdDate;
+	private Date updatedDate;
+	private Long recordVersion;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Long getId() {
@@ -30,5 +36,31 @@ public abstract class IdEntity {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	@Column(updatable = false)
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public Date getUpdatedDate() {
+		return updatedDate;
+	}
+
+	public void setUpdatedDate(Date updatedDate) {
+		this.updatedDate = updatedDate;
+	}
+	@Column(nullable=false, precision=10, scale=0)
+    @Version
+	public Long getRecordVersion() {
+		return recordVersion;
+	}
+
+	public void setRecordVersion(Long recordVersion) {
+		this.recordVersion = recordVersion;
 	}
 }

@@ -15,6 +15,8 @@ import javax.persistence.Table;
 import org.hibernate.annotations.BatchSize;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.hhz.tms.entity.IdEntity;
 
 /**
@@ -27,7 +29,7 @@ public class Resource extends IdEntity {
 	// action url
 	private String url;
 	private String remark;
-	private boolean enableFlg;
+	private Boolean enableFlg;
 	private List<Permission> permissions;
 
 	public String getUrl() {
@@ -46,7 +48,7 @@ public class Resource extends IdEntity {
 		this.remark = remark;
 	}
 	@JsonIgnore
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "t_sys_resource_perm_rela", joinColumns = { @JoinColumn(name = "resource_id") }, inverseJoinColumns = { @JoinColumn(name = "permission_id") })
 	@BatchSize(size=10)
 	public List<Permission> getPermissions() {
@@ -56,12 +58,12 @@ public class Resource extends IdEntity {
 	public void setPermissions(List<Permission> permissions) {
 		this.permissions = permissions;
 	}
-
-	public boolean isEnableFlg() {
+	@JsonSerialize(using=ToStringSerializer.class)
+	public Boolean getEnableFlg() {
 		return enableFlg;
 	}
 
-	public void setEnableFlg(boolean enableFlg) {
+	public void setEnableFlg(Boolean enableFlg) {
 		this.enableFlg = enableFlg;
 	}
 

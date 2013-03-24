@@ -1,7 +1,8 @@
 package com.hhz.tms.data;
 
-import com.hhz.tms.entity.User;
 import org.springside.modules.test.data.RandomData;
+
+import com.hhz.tms.entity.sys.User;
 
 public class UserData {
 

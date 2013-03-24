@@ -7,6 +7,8 @@ import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+import com.hhz.tms.entity.sys.User;
+
 //JPA标识
 @Entity
 @Table(name = "t_task")
