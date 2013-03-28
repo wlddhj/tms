@@ -14,6 +14,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.OrderBy;
+
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.hhz.tms.entity.IdEntity;
@@ -28,10 +31,20 @@ public class Dept extends IdEntity {
 	private String deptName;
 	private BigDecimal dispOrderNo;
 	private Boolean enableFlg;
+	private String remark;
 	private Dept parent;
 	private List<Dept> children;
 	private List<User> users;
-
+	public Dept(){
+		
+	}
+	public Dept(Long parentId) {
+		if (parentId != null && parentId != 0) {
+			Dept dept = new Dept();
+			dept.setId(parentId);
+			this.setParent(dept);
+		}
+	}
 	public String getDeptName() {
 		return deptName;
 	}
@@ -67,6 +80,8 @@ public class Dept extends IdEntity {
 		this.parent = parent;
 	}
 	@OneToMany(mappedBy = "dept")
+	@BatchSize(size=10)
+	@OrderBy(clause="disp_order_no asc")
 	public List<User> getUsers() {
 		return users;
 	}
@@ -82,5 +97,11 @@ public class Dept extends IdEntity {
 
 	public void setChildren(List<Dept> children) {
 		this.children = children;
+	}
+	public String getRemark() {
+		return remark;
+	}
+	public void setRemark(String remark) {
+		this.remark = remark;
 	}
 }

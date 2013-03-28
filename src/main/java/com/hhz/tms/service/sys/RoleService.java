@@ -15,8 +15,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.hhz.tms.dao.BaseDao;
 import com.hhz.tms.dao.sys.PermissionDao;
 import com.hhz.tms.dao.sys.RoleDao;
+import com.hhz.tms.dao.sys.UserDao;
 import com.hhz.tms.entity.sys.Permission;
 import com.hhz.tms.entity.sys.Role;
+import com.hhz.tms.entity.sys.User;
 import com.hhz.tms.service.BaseService;
 
 /**
@@ -31,6 +33,8 @@ public class RoleService  extends BaseService<Role>{
 	private RoleDao roleDao;
 	@Autowired
 	private PermissionDao permissionDao;
+	@Autowired
+	private UserDao userDao;
 	@Override
 	public BaseDao<Role> getBaseDao() {
 		// TODO Auto-generated method stub
@@ -68,6 +72,36 @@ public class RoleService  extends BaseService<Role>{
 					Permission permission = permissionDao.findOne(id_new);
 					permission.setId(id_new);
 					role.getPermissions().add(permission);
+				}
+			}
+		}
+		roleDao.save(role);
+	}
+	/** 保存角色-用户关联关系 */
+	@Transactional(readOnly = false)
+	public void saveUsers(Long id, String userids) {
+		String[] ids = userids.split(",");
+		Role role = getEntity(id);
+		// 删除不存在的记录
+		List<User> users = role.getUsers();
+		for (Iterator<User> it = users.iterator(); it.hasNext();) {
+			User user = it.next();
+			if (!ArrayUtils.contains(ids, String.valueOf(user.getId()))) {
+				// 删除不存在的记录
+				it.remove();
+			} else {
+				// 已有的记录不动
+				ids = ArrayUtils.removeElement(ids, String.valueOf(user.getId()));
+			}
+		}
+		// 新增新记录
+		for (String strId : ids) {
+			if (StringUtils.isNotBlank(strId)) {
+				Long id_new = Long.valueOf(strId);
+				if (id_new > 0) {
+					User user = userDao.findOne(id_new);
+					user.setId(id_new);
+					role.getUsers().add(user);
 				}
 			}
 		}

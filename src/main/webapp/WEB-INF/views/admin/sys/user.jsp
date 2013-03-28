@@ -3,12 +3,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>菜单管理</title>
+	<title>用户管理</title>
 <%@ include file="/WEB-INF/layouts/admin/header.jsp"%>
 </head>
 <body class="easyui-layout" >
 
-	<div data-options="region:'west'" title="菜单" style="width:380px;">
+	<div data-options="region:'west'" title="用户" style="width:380px;">
 	  	<ul id="tt">
 	  	</ul>
 	</div>
@@ -20,7 +20,7 @@
 	    </div>
 	</div>
 	<div id="mm" class="easyui-menu" style="width:120px;">  
-        <div onclick="append()" data-options="iconCls:'icon-add'">新建</div>  
+        <div id="mm_add" onclick="append()" data-options="iconCls:'icon-add'">新建</div>  
         <div id="mm_remove" onclick="remove()" data-options="iconCls:'icon-remove'">删除</div>  
         <div class="menu-sep"></div>  
         <div onclick="expand()">Expand</div>  
@@ -32,18 +32,26 @@ $(function(){
 	$("#tt").tree({
 		checkbox:false,
 		animate:true,dnd:true,
-		url:"${ctx}/admin/menu/initTree",
+		url:"${ctx}/admin/user/initTree",
 		onSelect:function(node){
 			lastSelectNodeId=node.id;
 			var isLeaf=$(this).tree('isLeaf',node.target);
-			var item = $('#mm').menu('findItem', '删除');
+			var itemRemove = $('#mm').menu('findItem', '删除');
+			var itemAdd = $('#mm').menu('findItem', '新建');
 			if (!isLeaf){
-				$('#mm').menu('disableItem', item.target);
+				$('#mm').menu('disableItem', itemRemove.target);
 			}else{
-				$('#mm').menu('enableItem', item.target);
+				$('#mm').menu('enableItem', itemRemove.target);
 			}
-			if (node.id !='0'){
-				loadEntity(node.id);
+			if (node.attributes.nodeType =='dept'){
+				$('#mm').menu('enableItem', itemAdd.target);
+			}else{
+				$('#mm').menu('disableItem', itemAdd.target);
+			}
+			
+			if (node.attributes.nodeType =='user'){
+				var userId=node.id.substr(4);
+				loadEntity(userId);
 			}
 		},
 		onLoadSuccess:function(node,data){
@@ -60,7 +68,7 @@ $(function(){
 		},
 		onDrop:function(target, source, point){
 			var parentNode=$("#tt").tree('getNode',target);
-		  	$.post('${ctx}/admin/menu/drag',{id:source.id,'parentId':parentNode.id},function(result){
+		  	$.post('${ctx}/admin/user/drag',{id:source.id,'parentId':parentNode.id},function(result){
 			  $('#tt').tree('reload');
 			});
 		},
@@ -75,7 +83,7 @@ $(function(){
 	});
 });
 function loadEntity(id){
-	$.get('${ctx}/admin/menu/detail/'+id,function(result){
+	$.get('${ctx}/admin/user/detail/'+id,function(result){
 		$("#divRightContent").html(result);
 	});
 }
@@ -88,15 +96,15 @@ function append(){
 //             text: '新菜单'
 //         }]  
 //     });
-    $.get('${ctx}/admin/menu/create/'+node.id,function(result){
+    $.get('${ctx}/admin/user/create/'+node.id,function(result){
 		$("#divRightContent").html(result);
 	});
 }  
-function remove(){  
+function remove(){
     var node = $('#tt').tree('getSelected');
     $('#tt').tree('remove', node.target);
     lastSelectNodeId='';
-    $.get('${ctx}/admin/menu/delete/'+node.id,function(result){
+    $.get('${ctx}/admin/user/delete/'+node.id,function(result){
     	$("#divRightContent").html('');
 	});
 }
@@ -110,11 +118,11 @@ function expand(){
 }
 function save(){
 	$("#inputForm").form('submit',{
-		url:'${ctx}/admin/menu/save',
+		url:'${ctx}/admin/user/save',
 		success:function(result){
 			if(result.indexOf('success')!=-1){
 				var id=result.substr(result.indexOf(":")+1);
-				lastSelectNodeId=id;
+				lastSelectNodeId='user'+id;
 				$("#tt").tree('reload');
 			}else{
 				alert(result);

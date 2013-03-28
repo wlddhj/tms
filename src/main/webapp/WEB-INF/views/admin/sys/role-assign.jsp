@@ -22,8 +22,11 @@
 </div>
 <div region="center" border="false">
 	<div class="easyui-layout" fit="true">
-		<div region="center" title="权限">
+		<div region="west" title="权限" style="width: 250px;">
 			<ul id="tree"></ul>
+		</div>
+		<div region="center" title="用户">
+			<ul id="treeUser"></ul>
 		</div>
 		
 		<div region="south" style="height: 40px;padding:5px;">

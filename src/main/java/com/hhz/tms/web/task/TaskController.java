@@ -77,8 +77,8 @@ public class TaskController {
 
 	@RequestMapping(value = "create", method = RequestMethod.POST)
 	public String create(@Valid Task newTask, RedirectAttributes redirectAttributes) {
-		User user = new User(getCurrentUserId());
-		newTask.setUser(user);
+//		User user = new User(getCurrentUserId());
+//		newTask.setUser(user);
 
 		taskService.saveTask(newTask);
 		redirectAttributes.addFlashAttribute("message", "创建任务成功");

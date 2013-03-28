@@ -3,12 +3,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>菜单管理</title>
+	<title>机构管理</title>
 <%@ include file="/WEB-INF/layouts/admin/header.jsp"%>
 </head>
 <body class="easyui-layout" >
 
-	<div data-options="region:'west'" title="菜单" style="width:380px;">
+	<div data-options="region:'west'" title="机构" style="width:380px;">
 	  	<ul id="tt">
 	  	</ul>
 	</div>
@@ -32,7 +32,7 @@ $(function(){
 	$("#tt").tree({
 		checkbox:false,
 		animate:true,dnd:true,
-		url:"${ctx}/admin/menu/initTree",
+		url:"${ctx}/admin/dept/initTree",
 		onSelect:function(node){
 			lastSelectNodeId=node.id;
 			var isLeaf=$(this).tree('isLeaf',node.target);
@@ -60,7 +60,7 @@ $(function(){
 		},
 		onDrop:function(target, source, point){
 			var parentNode=$("#tt").tree('getNode',target);
-		  	$.post('${ctx}/admin/menu/drag',{id:source.id,'parentId':parentNode.id},function(result){
+		  	$.post('${ctx}/admin/dept/drag',{id:source.id,'parentId':parentNode.id},function(result){
 			  $('#tt').tree('reload');
 			});
 		},
@@ -75,7 +75,7 @@ $(function(){
 	});
 });
 function loadEntity(id){
-	$.get('${ctx}/admin/menu/detail/'+id,function(result){
+	$.get('${ctx}/admin/dept/detail/'+id,function(result){
 		$("#divRightContent").html(result);
 	});
 }
@@ -88,7 +88,7 @@ function append(){
 //             text: '新菜单'
 //         }]  
 //     });
-    $.get('${ctx}/admin/menu/create/'+node.id,function(result){
+    $.get('${ctx}/admin/dept/create/'+node.id,function(result){
 		$("#divRightContent").html(result);
 	});
 }  
@@ -96,7 +96,7 @@ function remove(){
     var node = $('#tt').tree('getSelected');
     $('#tt').tree('remove', node.target);
     lastSelectNodeId='';
-    $.get('${ctx}/admin/menu/delete/'+node.id,function(result){
+    $.get('${ctx}/admin/dept/delete/'+node.id,function(result){
     	$("#divRightContent").html('');
 	});
 }
@@ -110,7 +110,7 @@ function expand(){
 }
 function save(){
 	$("#inputForm").form('submit',{
-		url:'${ctx}/admin/menu/save',
+		url:'${ctx}/admin/dept/save',
 		success:function(result){
 			if(result.indexOf('success')!=-1){
 				var id=result.substr(result.indexOf(":")+1);

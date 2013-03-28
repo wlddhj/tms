@@ -23,7 +23,7 @@ import com.hhz.tms.service.account.AccountService;
  * @author calvin
  */
 @Controller
-@RequestMapping(value = "/admin/user")
+@RequestMapping(value = "/admin2/user")
 public class UserAdminController {
 
 	@Autowired

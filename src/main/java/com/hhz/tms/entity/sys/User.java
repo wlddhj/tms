@@ -3,9 +3,10 @@
  */
 package com.hhz.tms.entity.sys;
 
-import java.util.Date;
+import java.math.BigDecimal;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -18,17 +19,16 @@ import javax.persistence.Transient;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.validator.constraints.NotBlank;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.ser.std.BooleanSerializer;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.hhz.tms.entity.IdEntity;
 
 /**
  * 用户
+ * 
  * @author huangjian
- *
+ * 
  */
 @Entity
 @Table(name = "t_sys_user")
@@ -38,15 +38,18 @@ public class User extends IdEntity {
 	private String plainPassword;
 	private String password;
 	private String salt;
-	private Date registerDate;
+	private BigDecimal dispOrderNo;
 	private Boolean enableFlg;
+	private String remark;
 	private List<Role> roles;
 	private Dept dept;
 	public User() {
 	}
 
-	public User(Long id) {
-		this.id = id;
+	public User(Long deptId) {
+		Dept dept=new Dept();
+		dept.setId(deptId);
+		this.setDept(dept);
 	}
 
 	@NotBlank
@@ -66,6 +69,7 @@ public class User extends IdEntity {
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	@JsonIgnore
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "t_sys_role_user_rela", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = { @JoinColumn(name = "role_id") })
@@ -76,6 +80,7 @@ public class User extends IdEntity {
 	public void setRoles(List<Role> roles) {
 		this.roles = roles;
 	}
+
 	// 不持久化到数据库，也不显示在Restful接口的属性.
 	@Transient
 	@JsonIgnore
@@ -103,23 +108,13 @@ public class User extends IdEntity {
 		this.salt = salt;
 	}
 
-
-	// 设定JSON序列化时的日期格式
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+08:00")
-	public Date getRegisterDate() {
-		return registerDate;
-	}
-
-	public void setRegisterDate(Date registerDate) {
-		this.registerDate = registerDate;
-	}
-
 	@Override
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this);
 	}
+
 	@ManyToOne
-	@JoinColumn(name="dept_id")
+	@JoinColumn(name = "dept_id")
 	public Dept getDept() {
 		return dept;
 	}
@@ -127,12 +122,30 @@ public class User extends IdEntity {
 	public void setDept(Dept dept) {
 		this.dept = dept;
 	}
-	@JsonSerialize(using=ToStringSerializer.class)
+
+	@JsonSerialize(using = ToStringSerializer.class)
 	public Boolean getEnableFlg() {
 		return enableFlg;
 	}
 
 	public void setEnableFlg(Boolean enableFlg) {
 		this.enableFlg = enableFlg;
+	}
+
+	@Column(precision = 12, scale = 0)
+	public BigDecimal getDispOrderNo() {
+		return dispOrderNo;
+	}
+
+	public void setDispOrderNo(BigDecimal dispOrderNo) {
+		this.dispOrderNo = dispOrderNo;
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
 	}
 }

@@ -122,17 +122,17 @@
 					<ul>
 						<li>
 							<div>
-							<a href="javascript:addTab('用户管理','${ctx}/admin/resource')">
+							<a href="javascript:addTab('机构管理','${ctx}/admin/dept')">
 								<span class="icon icon-dict">&nbsp;</span>
-								<span class="nav">用户管理</span>
+								<span class="nav">机构管理</span>
 							</a>
 							</div>
 						</li>
 						<li>
 							<div>
-							<a href="javascript:addTab('机构管理','${ctx}/admin/resource')">
+							<a href="javascript:addTab('用户管理','${ctx}/admin/user')">
 								<span class="icon icon-dict">&nbsp;</span>
-								<span class="nav">机构管理</span>
+								<span class="nav">用户管理</span>
 							</a>
 							</div>
 						</li>

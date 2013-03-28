@@ -15,9 +15,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.hhz.tms.entity.sys.Dept;
 import com.hhz.tms.entity.sys.Permission;
 import com.hhz.tms.entity.sys.Role;
 import com.hhz.tms.service.BaseService;
+import com.hhz.tms.service.sys.DeptService;
 import com.hhz.tms.service.sys.PermissionService;
 import com.hhz.tms.service.sys.RoleService;
 import com.hhz.tms.util.EasyTreeNode;
@@ -35,7 +37,8 @@ import com.hhz.tms.web.SingleCrudControll;
 public class RoleController extends SingleCrudControll<Role>{
 	@Autowired
 	private RoleService roleService;
-
+	@Autowired
+	private DeptService deptService;
 	@Autowired
 	private PermissionService permissionService;
 	@RequestMapping(value = "")
@@ -68,6 +71,22 @@ public class RoleController extends SingleCrudControll<Role>{
 		List<EasyTreeNode> list = new ArrayList<EasyTreeNode>();
 		list.add(treeNode);
 		RenderUtil.renderJson(list, response);
+	}
+	
+	@RequestMapping(value = "initTree")
+	public void initTree(HttpServletResponse response) {
+		List<Dept> depts = deptService.findAllEnable();
+		EasyTreeNode nodes = EasyTreeUtil.getDeptTree(depts, true);
+		List<EasyTreeNode> list = new ArrayList<EasyTreeNode>();
+		list.add(nodes);
+		RenderUtil.renderJson(list, response);
+	}
+	
+	@RequestMapping(value = "saveUser/{id}")
+	public void saveUser(@PathVariable("id") Long id, HttpServletRequest request,HttpServletResponse response) {
+		String userids=request.getParameter("userids");
+		roleService.saveUsers(id, userids);
+		permission(id, response);
 	}
 	@RequestMapping(value = "savePerm/{id}")
 	public void savePerm(@PathVariable("id") Long id, HttpServletRequest request,HttpServletResponse response) {

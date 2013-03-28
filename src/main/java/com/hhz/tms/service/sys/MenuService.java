@@ -91,6 +91,9 @@ public class MenuService {
 	public void save(Menu entity) {
 		if (entity.getParent()!=null && (entity.getParent().getId() == null || entity.getParent().getId() == 0)) {
 			entity.setParent(null);
+		}else if (entity.getParent() != null) {
+			Menu parent=menuDao.findOne(entity.getParent().getId());
+			entity.setParent(parent);
 		}
 		menuDao.save(entity);
 	}

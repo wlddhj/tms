@@ -7,10 +7,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.hhz.tms.entity.sys.Dept;
 import com.hhz.tms.entity.sys.Menu;
 import com.hhz.tms.entity.sys.Permission;
 import com.hhz.tms.entity.sys.Resource;
 import com.hhz.tms.entity.sys.Role;
+import com.hhz.tms.entity.sys.User;
 
 /**
  * @author jianhuang
@@ -98,6 +100,52 @@ public class EasyTreeUtil {
 				root.getChildren().add(resultVo);
 			} else {
 				EasyTreeNode parentVo = mapId2Vo.get(menu.getParent().getId());
+				parentVo.getChildren().add(resultVo);
+				parentVo.setState(EasyTreeNode.STATE_CLOSED);
+			}
+		}
+		for (EasyTreeNode node : root.getChildren()) {
+			node.setState(EasyTreeNode.STATE_OPEN);
+		}
+		return root;
+	}
+
+	/** 机构树 */
+	public static EasyTreeNode getDeptTree(List<Dept> depts) {
+		return getDeptTree(depts, false);
+	}
+
+	/** 机构人员树 */
+	public static EasyTreeNode getDeptTree(List<Dept> depts, boolean initUser) {
+		EasyTreeNode root = getRoot("All Depts");
+
+		Map<Long, EasyTreeNode> mapId2Vo = new HashMap<Long, EasyTreeNode>();
+		for (Dept dept : depts) {
+			EasyTreeNode resultVo = new EasyTreeNode();
+			resultVo.setText(dept.getDeptName());
+			resultVo.setState(EasyTreeNode.STATE_OPEN);
+			resultVo.setId(String.valueOf(dept.getId()));
+			resultVo.addAttr("parentId", dept.getParent() == null ? "" : dept.getParent().getId());
+			resultVo.addAttr("nodeType", "dept");
+			if (initUser) {
+				// 生成人员节点
+				for (User user : dept.getUsers()) {
+					EasyTreeNode userNode = new EasyTreeNode();
+					userNode.setText(user.getName());
+					userNode.setId("user"+String.valueOf(user.getId()));
+					userNode.addAttr("nodeType", "user");
+					resultVo.getChildren().add(userNode);
+				}
+			}
+			mapId2Vo.put(dept.getId(), resultVo);
+		}
+
+		for (Dept dept : depts) {
+			EasyTreeNode resultVo = mapId2Vo.get(dept.getId());
+			if (dept.getParent() == null) {
+				root.getChildren().add(resultVo);
+			} else {
+				EasyTreeNode parentVo = mapId2Vo.get(dept.getParent().getId());
 				parentVo.getChildren().add(resultVo);
 				parentVo.setState(EasyTreeNode.STATE_CLOSED);
 			}

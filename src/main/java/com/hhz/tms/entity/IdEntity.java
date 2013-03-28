@@ -10,6 +10,7 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 /**
  * 统一定义id的entity基类.
@@ -28,6 +29,7 @@ public abstract class IdEntity {
 	private Date createdDate;
 	private Date updatedDate;
 	private Long recordVersion;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Long getId() {
@@ -38,6 +40,7 @@ public abstract class IdEntity {
 		this.id = id;
 	}
 
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+08:00")
 	@Column(updatable = false)
 	public Date getCreatedDate() {
 		return createdDate;
@@ -47,6 +50,7 @@ public abstract class IdEntity {
 		this.createdDate = createdDate;
 	}
 
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+08:00")
 	public Date getUpdatedDate() {
 		return updatedDate;
 	}
@@ -54,8 +58,9 @@ public abstract class IdEntity {
 	public void setUpdatedDate(Date updatedDate) {
 		this.updatedDate = updatedDate;
 	}
-	@Column(nullable=false, precision=10, scale=0)
-    @Version
+
+	@Column(nullable = false, precision = 10, scale = 0)
+	@Version
 	public Long getRecordVersion() {
 		return recordVersion;
 	}
