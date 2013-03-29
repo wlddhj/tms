@@ -44,9 +44,19 @@ $(function(){
 		onClickRow:function(rowIndex, row){
 			curRowId=row.id;
 			loadPerm();
+			loadUsers();
 		}
 	});
 	$("#tree").tree({
+		checkbox:true,
+		onSelect:function(node){
+			
+		},
+		onLoadSuccess:function(node,data){
+			
+		}
+	});
+	$("#treeUser").tree({
 		checkbox:true,
 		onSelect:function(node){
 			
@@ -61,25 +71,51 @@ function loadPerm(){
 		$("#tree").tree('loadData',result);
 	});
 }
-function save(){
-	var nodes = $('#tree').tree('getChecked');
-	var s = '';
+function loadUsers(){
+	$.post("${ctx}/admin/role/user/"+curRowId,function(result) {
+		$("#treeUser").tree('loadData',result);
+	});
+}
+function getCheckedUserIds(treeId){
+	var nodes = $('#'+treeId).tree('getChecked');
+	var m = '';
 	for(var i=0; i<nodes.length; i++){
-		if (s != '') s += ',';
-		s += nodes[i].id;
+		if (m != '') m += ',';
+		var node=nodes[i];
+		if (node.attributes.nodeType =='user'){
+			m += node.id.substr(4);
+		}
 	}
-	$.post("${ctx}/admin/role/savePerm/"+curRowId,{permids:s},function(result) {
-		$("#tree").tree('loadData',result);
-            $.messager.show({
-                title:'Tip',
-                msg:'保存成功',
-                timeout:2000,
-                showType:'show'
-            });
+	return m;
+}
+function getCheckedIds(treeId){
+	var nodes = $('#'+treeId).tree('getChecked');
+	var m = '';
+	for(var i=0; i<nodes.length; i++){
+		if (m != '') m += ',';
+		m += nodes[i].id;
+	}
+	return m;
+}
+function save(){
+	var s = getCheckedIds('tree');
+	var u = getCheckedUserIds('treeUser');
+	$.post("${ctx}/admin/role/saveAssign/"+curRowId,{permids:s,userids:u},function(result) {
+		if (result.success){
+	        $.messager.show({
+	            title:'Tip',
+	            msg:result.success,
+	            timeout:2000,
+	            showType:'show'
+	        });
+		}else{
+			 $.messager.alert('Tip','保存失败!','warning'); 
+		}
 	});
 }
 function refresh(){
 	loadPerm();
+	loadUsers();
 }
 </script>
 </body>

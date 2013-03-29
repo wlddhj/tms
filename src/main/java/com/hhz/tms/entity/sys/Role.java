@@ -65,7 +65,8 @@ public class Role extends IdEntity {
 	}
 
 	@JsonIgnore
-	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "roles")
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "t_sys_role_user_rela", joinColumns = { @JoinColumn(name = "role_id") }, inverseJoinColumns = { @JoinColumn(name = "user_id") })
 	public List<User> getUsers() {
 		return users;
 	}

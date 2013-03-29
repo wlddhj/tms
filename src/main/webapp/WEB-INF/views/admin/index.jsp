@@ -8,7 +8,7 @@
 <meta http-equiv="Cache-Control" content="no-store" />
 <meta http-equiv="Pragma" content="no-cache" />
 <meta http-equiv="Expires" content="0" />
-
+<script type="text/javascript">	_ctx='${ctx}';	</script>
 <link type="image/x-icon" href="${ctx}/static/images/favicon.ico" rel="shortcut icon">
 <link href="${ctx}/static/jquery-validation/1.10.0/validate.css" type="text/css" rel="stylesheet" />
 <link href="${ctx}/static/jquery-easyui/themes/gray/easyui.css" rel="stylesheet" type="text/css" >
@@ -36,7 +36,6 @@
             	当前用户：<b><shiro:principal property="name"/></b>
 				&nbsp;
 				[ <a href="javascript: changePwd();">修改密码</a> 
-				| <a href="javascript: editMyInfo();">我的资料</a> 
 				| <a  href="javascript:logout();">退出登录</a> ]
             </span>
             <span style="font-size: 16px; ">
@@ -136,6 +135,14 @@
 							</a>
 							</div>
 						</li>
+						<li>
+							<div>
+							<a href="javascript:addTab('用户分配','${ctx}/admin/user/assign')">
+								<span class="icon icon-dict">&nbsp;</span>
+								<span class="nav">用户分配</span>
+							</a>
+							</div>
+						</li>
 					</ul>
 				</div>
 				<div title="基础管理" iconCls="icon-dict" style="overflow:auto;">
@@ -172,7 +179,7 @@
 
 	<div id="changePwdDiv" title="密码修改" style="width:300px;">
 		<form id="changePwdForm" method="post">
-			<input type="hidden" name="acctId"  value=""/>
+			<input type="hidden" name="id"  value="<shiro:principal property="id"/>"/>
 			<table style="width:100%;">
 				<tr>
 					<td width="60">原密码</td>

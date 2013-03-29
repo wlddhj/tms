@@ -188,7 +188,7 @@ function initDialog(){
 function logout(){
 	$.messager.confirm('提示','您确认要退出系统吗？',function(t){
 		if(t){
-			window.location.href=_ctx+'/j_spring_security_logout';
+			window.location.href=_ctx+'/logout';
 		}
 	});
 }
@@ -199,13 +199,11 @@ function changePwd(){
 function submitPwdForm(){
 	if(!$('#changePwdForm').form('validate'))return;
 	var param = $('#changePwdForm').serialize();
-	var url = _ctx+'/plas/plas-acct!changePwd.action';
+	var url = _ctx+'/admin/user/changePwd';
 	$.post(url,param,function(data){
-		if('error1' == data){
+		if('error' == data){
 			$('#oldPwdWrong').show();
-		}else if('error' == data){
-			$.messager.alert('提示','保存失败');
-		}else if('success' == data){
+		}else if(data=='success'){
 			$.messager.show({
 				title:'提示',
 				msg:'保存成功,请妥善保管您的密码！',
@@ -213,6 +211,8 @@ function submitPwdForm(){
 				showType:'slide'
 			});
 			$('#changePwdDiv').dialog('close');
+		}else{
+			$.messager.alert('提示','保存失败');
 		}
 	});
 }

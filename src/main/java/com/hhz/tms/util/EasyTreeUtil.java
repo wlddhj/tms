@@ -112,11 +112,14 @@ public class EasyTreeUtil {
 
 	/** 机构树 */
 	public static EasyTreeNode getDeptTree(List<Dept> depts) {
-		return getDeptTree(depts, false);
+		return getDeptTree(depts, false, null);
+	}
+	public static EasyTreeNode getDeptTree(List<Dept> depts,boolean initUser) {
+		return getDeptTree(depts, initUser, null);
 	}
 
 	/** 机构人员树 */
-	public static EasyTreeNode getDeptTree(List<Dept> depts, boolean initUser) {
+	public static EasyTreeNode getDeptTree(List<Dept> depts, boolean initUser, List<User> lstSelect) {
 		EasyTreeNode root = getRoot("All Depts");
 
 		Map<Long, EasyTreeNode> mapId2Vo = new HashMap<Long, EasyTreeNode>();
@@ -132,8 +135,12 @@ public class EasyTreeUtil {
 				for (User user : dept.getUsers()) {
 					EasyTreeNode userNode = new EasyTreeNode();
 					userNode.setText(user.getName());
-					userNode.setId("user"+String.valueOf(user.getId()));
+					userNode.setId("user" + String.valueOf(user.getId()));
 					userNode.addAttr("nodeType", "user");
+					if (lstSelect != null) {
+						boolean isContain = CollectionUtil.contain(lstSelect, "id", user.getId());
+						userNode.setChecked(isContain);
+					}
 					resultVo.getChildren().add(userNode);
 				}
 			}

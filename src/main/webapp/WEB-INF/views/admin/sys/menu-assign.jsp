@@ -32,7 +32,6 @@ var curRowId;
 $(function(){
 	$("#tt").tree({
 		checkbox:false,
-		animate:true,dnd:true,
 		url:"${ctx}/admin/menu/allEable",
 		onSelect:function(node){
 			curRowId=node.id;

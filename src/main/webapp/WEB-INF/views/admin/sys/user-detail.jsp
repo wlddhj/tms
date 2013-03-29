@@ -20,13 +20,22 @@
 						}
 					}
 			});
+			 $('#deptId').combotree({
+				 url:'${ctx}/admin/dept/allEable',
+				 editable:true
+			 });  
 		});
 	</script>
 <body>
 	<form id="inputForm" action="${ctx}/admin/user/save" method="post" class="form-horizontal">
 		<input type="hidden" name="id" value="${user.id}"/>
-		<input type="hidden" name="dept.id" value="${user.dept.id}"/>
 			<div class="control-group">
+			</div>	
+			<div class="control-group">
+				<label for="deptId" class="control-label">机构：</label>
+				<div class="controls">
+					<input type="text" id="deptId" name="deptId" value="${user.dept.id}" required="true" class="easyui-combotree input-large required"/>  
+				</div>
 			</div>	
 			<div class="control-group">
 				<label for="loginName" class="control-label">登录名:</label>

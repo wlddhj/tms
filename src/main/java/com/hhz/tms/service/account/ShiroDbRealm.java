@@ -161,5 +161,9 @@ public class ShiroDbRealm extends AuthorizingRealm {
 				return false;
 			return true;
 		}
+
+		public Long getId() {
+			return id;
+		}
 	}
 }

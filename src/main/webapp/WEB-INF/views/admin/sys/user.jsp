@@ -31,7 +31,7 @@ var lastSelectNodeId;
 $(function(){
 	$("#tt").tree({
 		checkbox:false,
-		animate:true,dnd:true,
+		animate:true,
 		url:"${ctx}/admin/user/initTree",
 		onSelect:function(node){
 			lastSelectNodeId=node.id;

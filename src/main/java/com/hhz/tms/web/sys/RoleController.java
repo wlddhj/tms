@@ -63,9 +63,9 @@ public class RoleController extends SingleCrudControll<Role>{
 		JsonUtil.renderListJson(response, roles);
 	}
 
-	@RequestMapping(value = "permission/{id}")
-	public void permission(@PathVariable("id") Long id, HttpServletResponse response) {
-		Role role = roleService.getEntity(id);
+	@RequestMapping(value = "permission/{roleId}")
+	public void permission(@PathVariable("roleId") Long roleId, HttpServletResponse response) {
+		Role role = roleService.getEntity(roleId);
 		List<Permission> permissions = permissionService.findAll();
 		EasyTreeNode treeNode = EasyTreeUtil.gePermCheckedTree(permissions, role.getPermissions());
 		List<EasyTreeNode> list = new ArrayList<EasyTreeNode>();
@@ -73,25 +73,22 @@ public class RoleController extends SingleCrudControll<Role>{
 		RenderUtil.renderJson(list, response);
 	}
 	
-	@RequestMapping(value = "initTree")
-	public void initTree(HttpServletResponse response) {
+	@RequestMapping(value = "user/{roleId}")
+	public void user(@PathVariable("roleId") Long roleId,HttpServletResponse response) {
+		Role role = roleService.getEntity(roleId);
 		List<Dept> depts = deptService.findAllEnable();
-		EasyTreeNode nodes = EasyTreeUtil.getDeptTree(depts, true);
+		EasyTreeNode nodes = EasyTreeUtil.getDeptTree(depts, true,role.getUsers());
 		List<EasyTreeNode> list = new ArrayList<EasyTreeNode>();
 		list.add(nodes);
 		RenderUtil.renderJson(list, response);
 	}
 	
-	@RequestMapping(value = "saveUser/{id}")
-	public void saveUser(@PathVariable("id") Long id, HttpServletRequest request,HttpServletResponse response) {
+	@RequestMapping(value = "saveAssign/{id}")
+	public void saveAssign(@PathVariable("id") Long id, HttpServletRequest request,HttpServletResponse response) {
 		String userids=request.getParameter("userids");
-		roleService.saveUsers(id, userids);
-		permission(id, response);
-	}
-	@RequestMapping(value = "savePerm/{id}")
-	public void savePerm(@PathVariable("id") Long id, HttpServletRequest request,HttpServletResponse response) {
 		String permids=request.getParameter("permids");
+		roleService.saveUsers(id, userids);
 		roleService.savePerms(id, permids);
-		permission(id, response);
+		JsonUtil.renderSuccess("保存成功", response);
 	}
 }

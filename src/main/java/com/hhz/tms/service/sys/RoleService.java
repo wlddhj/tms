@@ -69,7 +69,7 @@ public class RoleService  extends BaseService<Role>{
 			if (StringUtils.isNotBlank(strId)) {
 				Long id_new = Long.valueOf(strId);
 				if (id_new > 0) {
-					Permission permission = permissionDao.findOne(id_new);
+					Permission permission = new Permission();
 					permission.setId(id_new);
 					role.getPermissions().add(permission);
 				}
@@ -99,7 +99,7 @@ public class RoleService  extends BaseService<Role>{
 			if (StringUtils.isNotBlank(strId)) {
 				Long id_new = Long.valueOf(strId);
 				if (id_new > 0) {
-					User user = userDao.findOne(id_new);
+					User user =new User();
 					user.setId(id_new);
 					role.getUsers().add(user);
 				}
