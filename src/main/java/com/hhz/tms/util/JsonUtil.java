@@ -60,8 +60,12 @@ public class JsonUtil {
 		return obj2Json(map, dateformat, excludes, codeFields);
 	}
 
-	private static ObjectMapper getObjectMapper() {
+	public static ObjectMapper getObjectMapper() {
 		ObjectMapper mapper = new ObjectMapper();
+		SimpleBeanPropertyFilter propertyFilter = SimpleBeanPropertyFilter.serializeAllExcept(CollectionUtil
+				.array2Set(new String[0]));
+		SimpleFilterProvider filters = new SimpleFilterProvider().addFilter("excludeFilter", propertyFilter);
+		mapper.setFilters(filters);
 		return mapper;
 	}
 

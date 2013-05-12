@@ -1,3 +1,4 @@
+<%@page import="com.hhz.tms.util.ShiroUtil"%>
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ include file="/WEB-INF/layouts/taglib.jsp" %>
 <!DOCTYPE html>
@@ -33,7 +34,7 @@
 	<div region="north" split="false" border="false">
         <div class="top">
             <span style="float:right; padding-right:20px;" class="head">
-            	当前用户：<b><shiro:principal property="name"/></b>
+            	当前用户：<b><shiro:principal/></b>
 				&nbsp;
 				[ <a href="javascript: changePwd();">修改密码</a> 
 				| <a  href="javascript:logout();">退出登录</a> ]
@@ -179,7 +180,7 @@
 
 	<div id="changePwdDiv" title="密码修改" style="width:300px;">
 		<form id="changePwdForm" method="post">
-			<input type="hidden" name="id"  value="<shiro:principal property="id"/>"/>
+			<input type="hidden" name="id"  value="<%=ShiroUtil.getCurrentUserId()  %>"/>
 			<table style="width:100%;">
 				<tr>
 					<td width="60">原密码</td>

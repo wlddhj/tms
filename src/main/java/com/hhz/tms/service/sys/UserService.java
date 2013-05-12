@@ -35,7 +35,8 @@ import com.hhz.tms.entity.sys.User;
 // 默认将类中的所有public函数纳入事务管理.
 @Transactional(readOnly = true)
 public class UserService {
-	private static final int HASH_INTERATIONS = 1024;
+	public static final String HASH_ALGORITHM = "SHA-1";
+	public static final int HASH_INTERATIONS = 1024;
 	private static final int SALT_SIZE = 8;
 	private static Logger logger = LoggerFactory.getLogger(UserService.class);
 	@Autowired
@@ -57,6 +58,16 @@ public class UserService {
 		return userDao.findByLoginName(loginName);
 	}
 
+	/** 验证用户是否匹配 */
+	public boolean validate(String loginName, String password) {
+		boolean flag = false;
+		User user = userDao.findByLoginName(loginName);
+		if (user != null) {
+			flag = isPwdEqual(password, user);
+		}
+		return flag;
+	}
+
 	public boolean existDictTypeCd(String loginName, String loginNameOld) {
 		long cnt = userDao.existLoginName(loginName, loginNameOld);
 		if (cnt == 0) {
@@ -64,6 +75,7 @@ public class UserService {
 		}
 		return true;
 	}
+
 	@Transactional(readOnly = false)
 	public void saveRoles(Long id, String roleids) {
 		String[] ids = roleids.split(",");

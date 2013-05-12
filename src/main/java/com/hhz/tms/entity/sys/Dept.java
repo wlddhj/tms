@@ -15,6 +15,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.OrderBy;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -27,6 +29,7 @@ import com.hhz.tms.entity.IdEntity;
  */
 @Entity
 @Table(name = "t_sys_dept")
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Dept extends IdEntity {
 	private String deptName;
 	private BigDecimal dispOrderNo;

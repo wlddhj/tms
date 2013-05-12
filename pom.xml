@@ -200,6 +200,18 @@
 			<artifactId>commons-codec</artifactId>
 			<version>1.7</version>
 		</dependency>
+
+		<dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-cas</artifactId>
+			<version>${shiro.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 		<!-- SECURITY end -->
 
 		<!-- JSR303 BeanValidator -->
@@ -375,6 +387,7 @@
 			<artifactId>json</artifactId>
 			<version>20090211</version>
 		</dependency>
+
 	</dependencies>
 
 	<dependencyManagement>

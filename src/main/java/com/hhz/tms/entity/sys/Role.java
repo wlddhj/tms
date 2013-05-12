@@ -12,6 +12,9 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hhz.tms.entity.IdEntity;
 
@@ -22,6 +25,7 @@ import com.hhz.tms.entity.IdEntity;
 
 @Entity
 @Table(name = "t_sys_role")
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Role extends IdEntity {
 	private String roleCd;
 	private String roleName;

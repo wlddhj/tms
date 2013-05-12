@@ -12,6 +12,9 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hhz.tms.entity.IdEntity;
 
@@ -21,6 +24,7 @@ import com.hhz.tms.entity.IdEntity;
  */
 @Entity
 @Table(name = "t_sys_permission")
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Permission extends IdEntity {
 	private String permCd;
 	private String permName;

@@ -12,7 +12,15 @@
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
 	</context:component-scan>
 	
-	<mvc:annotation-driven/>
+	<mvc:annotation-driven>
+	    <mvc:message-converters>
+	        <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+			    <property name="objectMapper" >
+			        <bean class="com.hhz.tms.util.JsonUtil" factory-method="getObjectMapper"/>
+			    </property>
+			</bean>
+	    </mvc:message-converters>
+	</mvc:annotation-driven>
 		
 	<!-- 将无法mapping到Controller的path交给default servlet handler处理 -->		
 	<mvc:default-servlet-handler/>
@@ -24,5 +32,5 @@
 	</bean>
 	
 	<!-- 定义无Controller的path<->view直接映射 -->
-	<mvc:view-controller path="/" view-name="redirect:/task"/>
+	<mvc:view-controller path="/" view-name="redirect:/admin"/>
 </beans>

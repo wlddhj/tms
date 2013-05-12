@@ -17,6 +17,8 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.validator.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -32,6 +34,7 @@ import com.hhz.tms.entity.IdEntity;
  */
 @Entity
 @Table(name = "t_sys_user")
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class User extends IdEntity {
 	private String loginName;
 	private String name;
@@ -113,8 +116,9 @@ public class User extends IdEntity {
 		return ToStringBuilder.reflectionToString(this);
 	}
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "dept_id")
+	@JsonIgnore
 	public Dept getDept() {
 		return dept;
 	}
